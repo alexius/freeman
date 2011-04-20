@@ -6,7 +6,7 @@
  * @author     Petryk Fedor
  * @uses       Zend_Acl
  * @package    Core_Acl
- * @copyright  Copyright (c) 2006-2010 S2B (http://www.s2b.com.ua)
+ * @copyright  Copyright (c) 2010-2011 S2B (http://www.105.in.ua)
  */
 class Core_Acl_AclBuilder extends Zend_Acl
 {
@@ -26,7 +26,6 @@ class Core_Acl_AclBuilder extends Zend_Acl
 	
 	/**
      * Initializes DB from registry
-     * 
      */
 	public function init()
 	{
@@ -68,11 +67,14 @@ class Core_Acl_AclBuilder extends Zend_Acl
 	
     // TODO remove guest from code 
         
-        foreach ($groups as $role => $g) {
-        	if ($role != 'guest')
+        foreach ($groups as $role => $g)
+        {
+        	if ($role != 'guest'){
         		$this->addRole(new Zend_Acl_Role($role), 'guest');
-        	else 
+            }
+        	else {
         		$this->addRole(new Zend_Acl_Role($role));
+            }
         }
 
         foreach ($groups as $key => $g)
@@ -87,7 +89,6 @@ class Core_Acl_AclBuilder extends Zend_Acl
 	}
 	
 	/**
-	 * 
 	 * Returns all roles in the system
 	 * @return array | users roles list
 	 */
