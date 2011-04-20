@@ -86,7 +86,7 @@ class Core_Controller_Start extends Zend_Controller_Action
 	}
 
 	/**
-	 * function for returning json response via ajax with specific structure
+	 * Function for returning json response via ajax with specific structure
 	 */
 	protected function serviceResponse($type = 'application/json')
 	{

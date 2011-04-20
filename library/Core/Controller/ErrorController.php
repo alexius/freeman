@@ -51,13 +51,12 @@ class Core_Controller_ErrorController extends Core_Controller_Start
 	
 	public function init()
 	{
-		//$this->_helper->layout->setLayout('clear');	
+		//$this->_helper->layout->setLayout('clear');
 	}
 	
     public function errorAction() 
     { 
-    
-      //  $this->_helper->layout->setLayout('clear');      
+
         // Ensure the default view suffix is used so we always return good 
         // content
         $this->_helper->viewRenderer->setViewSuffix('phtml');
@@ -67,7 +66,6 @@ class Core_Controller_ErrorController extends Core_Controller_Start
 
         // $errors will be an object set as a parameter of the request object, 
         // type is a property
-       // var_dump( $errors);
        
         switch ($errors->type) { 
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER: 
@@ -109,13 +107,13 @@ class Core_Controller_ErrorController extends Core_Controller_Start
         $this->view->showErrors = $conf['showViewError'];
     } 
     
- /*   public function indexAction()
+    public function indexAction()
     {
           $this->getResponse()->setHttpResponseCode(404); 
           $this->view->title = '404 Страница не найдена'; 
           $this->view->message = Errors::getServerError(404);       
     }
-*/
+
     
     public function deniedAction()
     {
@@ -124,6 +122,6 @@ class Core_Controller_ErrorController extends Core_Controller_Start
 
 	public function notallowedAction()
     {
-		//print_R($this->_request);
+
     }
 }

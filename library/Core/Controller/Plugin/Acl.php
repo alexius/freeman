@@ -1,22 +1,4 @@
 <?php
-/**
- * Zion Framework
- * 
- * LICENSE
- *
- * This source file is subject to the new BSD license that is bundled
- * with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * http://framework.zend.com/license/new-bsd
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@zend.com so we can send you a copy immediately.
- * 
- * @subpackage Plugins
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Acl.php 58 2008-01-12 10:46:55Z aldemar $
- */
-
 /** Zend_Acl */
 require_once 'Zend/Acl.php';
 
@@ -162,13 +144,6 @@ class Core_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
 			$this->denyAccess();
 			return false;
 		}
-
-/*		if (!$this->getAcl()->has($request->getActionName()))
-		{
-			Core_Log_Logger::logAccessEvent($request, 4);
-			$this->denyAccess();
-			return false;
-		}*/
 
         /** Check if the controller/action can be accessed by the current user */
         if (!$this->getAcl()->isAllowed($this->_roleName, $resourceName, $request->getActionName())) 

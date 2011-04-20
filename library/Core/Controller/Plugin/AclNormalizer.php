@@ -38,10 +38,8 @@ class Core_Controller_Plugin_AclNormalizer extends Zend_Controller_Plugin_Abstra
 			{
 				list ( $module, $resourse ) = explode ( ':', $a ['resourse_code'] );
 				self::$_acl [$module] ['module_name'] = $a ['module_name'];
-         //       self::$_acl [$module] ['module_code'] = $a ['module_code'];
 				self::$_acl [$module] ['show'] = $a ['show'];
 				self::$_acl [$module] ['role_name'] = $a ['role_name'];
-				
 				self::$_acl [$module] ['resourses'] [$resourse] [] = array ('action' => $a ['action'], 'name' => $a ['right_name'], 'menu' => $a ['menu'] );
 			}
 		}
