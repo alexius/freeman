@@ -122,16 +122,22 @@ class Core_Log_Logger
 				$act = 'Неизвестный модуль';
 			}
 		}
-		
+
+        $params = '';
+        foreach ($request->getParams() as $key => $value)
+        {
+            $params .= $key . ':' . $value . ';';
+        }
+
 		$data += array( 
 			'access_path' => $module . '/' . $controller . '/' .$action,
 			'ip' =>  $ip,
 			'action_desc' => $act, 
-			'message' => self::$_eventsTypes[$type]
+			'message' => self::$_eventsTypes[$type],
+            'params' => $params
 		);
 			
 		self::insertEvent($data);
-		
 	}
 	
 	/**
@@ -169,12 +175,19 @@ class Core_Log_Logger
 		{
 			$userLog = 'Анонимный Пользователь (' . $ip . ')';
 		}
-		
+
+        $params = '';
+        foreach ($request->getParams() as $key => $value)
+        {
+            $params .= $key . ':' . $value . ';';
+        }
+
 		$data = $data + array( 
 			'action_desc' => $exception->getMessage(),
 			'ip' =>  $ip,
 			'message' => $exception->getTraceAsString(),
-			'access_path'  => $module . '/' . $controller . '/' . $action 
+			'access_path'  => $module . '/' . $controller . '/' . $action,
+            'params' => $params
 		);
 			
 		// Logging error into file
@@ -189,11 +202,10 @@ class Core_Log_Logger
 			$log = new Zend_Log ( new Zend_Log_Writer_Stream ( 
 				APPLICATION_PATH . '/log/error.log' ) );
 		}
-		$log->debug ( $userLog . '
-                 			' . $exception->getMessage () . "\n" 
-			. $exception->getTraceAsString () );
-			
+		$log->debug (
+            $userLog . ' ' . $exception->getMessage () . "\n"
+			. $exception->getTraceAsString ()
+        );
 		self::insertEvent($data);
-	
 	}
 }
