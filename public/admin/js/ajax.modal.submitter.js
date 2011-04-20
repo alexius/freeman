@@ -10,7 +10,7 @@ function createModalAjaxWindow(clickClass, modalWindowId, formId,
             width: 450,
             modal: true,
             buttons: {
-                "ŒÍ": function() {
+                "–û–∫": function() {
                     $(modalWindowId + ' .errors .notification-message')
                             .html('<img class="spinner" ' +
                                     'src="' + spinnerLink + '">');
