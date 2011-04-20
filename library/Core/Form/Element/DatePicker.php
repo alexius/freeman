@@ -11,6 +11,5 @@ require_once 'Zend/Form/Element.php';
  */
 class Core_Form_Element_DatePicker extends Zend_Form_Element
 {
-
 	public $helper = 'formDatePicker';
 }

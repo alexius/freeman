@@ -63,10 +63,6 @@ class Core_Form_Document extends Core_Form
 				array ('Label', array ('tag' => 'dt' ) )
 			)
 		));
-		
-
 	}
-	
-
 }
 ?>
