@@ -17,7 +17,7 @@
 		var filters = <?php echo Zend_Json::encode($this->service->filters());?>;
         $('select[name="system"] [value="<?php echo $this->system ?>"]').attr("selected", "selected");
 		var module = '';
-		
+
 		$('select[name="fmodule"]').change(function(){
 			module = $(this).val();
 			showSelectedResouses(module);
@@ -71,63 +71,13 @@
 			});
 		});
 
-		$('.add-translation').click( function () {
-			var href = $(this).attr('href');
-			$('#dialog-add').dialog({
-				resizable: false,
-				height:500,
-				width: 450,
-				modal: true,
-				buttons: {
-					"Ок": function() {
-						$('#dialog-add .errors .notification-message').html('<img class="spinner" ' +
-							'src="<?php echo $this->domainLink(1) . 'images/spinner.gif'; ?>">');
-						$('#translation').attr('action', href);
-						$('#translation').ajaxSubmit({
-						    success:    function(responseText) {
-								$('#dialog-add .errors, .ajax-errors').html('');
-								var ans_json = responseText;
-								if (ans_json.error == 'true')
-                                {
-									$('#dialog-add .error .notification-message')
-                                            .html(ans_json.error_message);
-                                    $('#dialog-add .error').fadeTo(0, 400);
-                                    $('#dialog-add .error').show();
-								}
-
-								if (ans_json.formMessages){
-									$('#dialog-add .ajax-errors').remove();
-									$.each(ans_json.formMessages, function (i, item){
-										var err = '<ul class="ajax-errors input-notification error png_bg">';
-										$.each(item, function (erri, errText){
-											err += '<li>' + errText + '</li>';
-
-										});
-										err += '</ul>';
-										$('#' + i).parent().append(err);
-									});
-								}
-
-								if (ans_json.message) {
-									$('#dialog-add .success .notification-message ')
-                                            .html(ans_json.message);
-									
-								}
-
-								return false;
-						    }
-
-					});
-						return false;
-					},
-					'<?php echo $this->translation('close')?>': function() {
-							$( this ).dialog( "close" );
-						return false;
-					}
-				}
-			});
-			return false;
-		});
+        $().modalAjaxForm({
+            clickClass: ".add-translation",
+			modalWindowId: "#dialog-add",
+			formId: "#translation",
+            closeButtonName: "<?php echo $this->translation('close')?>",
+            spinnerLink: "<?php echo $this->domainLink(1) . 'images/spinner.gif'; ?>"
+        });
 
 		function showSelectedResouses(moduleSel)
 		{
@@ -151,7 +101,7 @@
 
 		function showSelectedActions(resSel, modSel)
 		{
-			var options = '';	
+			var options = '';
 			$.each(filters, function(module, resourses)
 			{
 				$.each(resourses, function(resourse, actions)
@@ -231,7 +181,7 @@
 <div class="clear"></div>
 </form>
 <hr>
-	
+
 <div class="translations padding-left">
 	<form class="ajax-formss" method="POST"  action="<?php echo $host . 'translation/save/'?>">
 		<div class="no-display button-display">
@@ -265,7 +215,7 @@
 			<div class="spinner-wrapper"></div>
 			<div class="clear"></div>
 		</div>
-		
+
 	</form>
 </div>
 

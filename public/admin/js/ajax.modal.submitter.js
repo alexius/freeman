@@ -1,34 +1,49 @@
-function createModalAjaxWindow(clickClass, modalWindowId, formId,
-                               closeButtonName, spinnerLink)
+(function ($)
 {
-    $(clickClass).click( function ()
+	$.fn.modalAjaxForm = function(options) {
+
+		// настройки по умолчанию
+		var options = jQuery.extend({
+
+            // action urls
+			clickClass: "",
+			modalWindowId: "",
+			formId: "",
+            closeButtonName: "",
+            spinnerLink: ""
+		},
+			options);
+    var closeButtonName = options.closeButtonName;
+        
+    $(options.clickClass).click( function ()
     {
         var href = $(this).attr('href');
-        $(modalWindowId).dialog({
+        $(options.modalWindowId).dialog({
             resizable: false,
             height:500,
             width: 450,
             modal: true,
-            buttons: {
-                "Ок": function() {
-                    $(modalWindowId + ' .errors .notification-message')
+            buttons: [{
+                text: "Ок",
+                click: function() {
+                    $(options.modalWindowId + ' .error .notification-message')
                             .html('<img class="spinner" ' +
-                                    'src="' + spinnerLink + '">');
-                    $(formId).attr('action', href);
-                    $(formId).ajaxSubmit({
+                                    'src="' + options.spinnerLink + '">');
+                    $(options.formId).attr('action', href);
+                    $(options.formId).ajaxSubmit({
                         success:    function(responseText) {
-                            $(modalWindowId + ' .errors, .ajax-errors').html('');
+                            $(options.modalWindowId + ' .errors, .ajax-errors').html('');
                             var ans_json = responseText;
                             if (ans_json.error == 'true')
                             {
-                                $(modalWindowId + ' .error .notification-message')
+                                $(options.modalWindowId + ' .error .notification-message')
                                         .html(ans_json.error_message);
-                                $(modalWindowId + ' .error').fadeTo(0, 400);
-                                $(modalWindowId + ' .error').show();
+                                $(options.modalWindowId + ' .error').fadeTo(0, 400);
+                                $(options.modalWindowId + ' .error').show();
                             }
 
                             if (ans_json.formMessages){
-                                $(modalWindowId +  + ' .ajax-errors').remove();
+                                $(options.modalWindowId + ' .ajax-errors').remove();
                                 $.each(ans_json.formMessages, function (i, item)
                                 {
                                     var err = '<ul class="ajax-errors input-notification error png_bg">';
@@ -42,21 +57,24 @@ function createModalAjaxWindow(clickClass, modalWindowId, formId,
                             }
 
                             if (ans_json.message) {
-                                $(modalWindowId + ' .success .notification-message ')
+                                $(options.modalWindowId + ' .success .notification-message ')
                                         .html(ans_json.message);
 
                             }
                             return false;
-                        }
-                });
-                    return false;
-                },
-                closeButtonName: function() {
-                        $( this ).dialog( "close" );
-                    return false;
+                            }
+                        });
+                        return false;
+                    }},
+                {
+                    text: closeButtonName,
+                    click: function() {
+                            $( this ).dialog( "close" );
+                        return false;
                 }
-            }
+                }]
         });
         return false;
     });
-}
+    };
+})(jQuery);
