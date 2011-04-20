@@ -17,12 +17,8 @@ class Zend_View_Helper_Notification
 	 * Return current module base link path
 	 * @param int $base | if needed to return raw path
 	 */
-	public function notification($message, $type)
+	public function notification($message = null, $type)
 	{
-		if (empty($message)){
-			return;
-		}
-
         $imgLink = $this->view->domainLink(1)
             . 'images/icons/cross_grey_small.png';
 
@@ -39,12 +35,14 @@ class Zend_View_Helper_Notification
             $class = 'notification attention png_bg';
         }
 		
-		$template = '<div class="' . $class . '">
+		$template = '<div class="' . $class . ' no-display">
                     <a href="#" class="close">
                         <img src="' . $imgLink . '"
-                            title="Close this notification" alt="close">
+                            title="'
+                        . $this->view->translation('Close notification') .
+                        '" alt="' . $this->view->translation('close') . '">
                     </a>
-                    <div>' . $message . '</div>
+                    <div class="notification-message">' . $message . '</div>
 			    </div>';
 		return $template;
 	}

@@ -22,3 +22,29 @@ Zend_View_Helper_: Zend/View/Helper/
 #16 C:\wamp\www\freeman\library\Zend\Application.php(366): Zend_Application_Bootstrap_Bootstrap->run()
 #17 C:\wamp\www\freeman\public\admin\index.php(36): Zend_Application->run()
 #18 {main}
+2011-04-20T19:20:25+03:00 DEBUG (7): Пользователь (Fedor(1),127.0.0.1) Plugin by name 'Notifocation' was not found in the registry; used paths:
+System_View_Helper_: C:/wamp/www/freeman/public/admin/../../application/backend/modules/system/views\helpers/
+Core_View_Helper_: Core/View/Helper/
+Zend_View_Helper_: Zend/View/Helper/
+#0 C:\wamp\www\freeman\library\Zend\View\Abstract.php(1174): Zend_Loader_PluginLoader->load('Notifocation')
+#1 C:\wamp\www\freeman\library\Zend\View\Abstract.php(610): Zend_View_Abstract->_getPlugin('helper', 'notifocation')
+#2 C:\wamp\www\freeman\library\Zend\View\Abstract.php(336): Zend_View_Abstract->getHelper('notifocation')
+#3 C:\wamp\www\freeman\library\Core\View\Helper\ModalDialog.php(30): Zend_View_Abstract->__call('notifocation', Array)
+#4 C:\wamp\www\freeman\library\Core\View\Helper\ModalDialog.php(30): Zend_View->notifocation(NULL, 'error')
+#5 [internal function]: Zend_View_Helper_ModalDialog->modalDialog(Object(Form_Translation), 'dialog-add', '???????????? ??...')
+#6 C:\wamp\www\freeman\library\Zend\View\Abstract.php(342): call_user_func_array(Array, Array)
+#7 C:\wamp\www\freeman\application\backend\modules\system\views\scripts\translation\index.phtml(274): Zend_View_Abstract->__call('modalDialog', Array)
+#8 C:\wamp\www\freeman\application\backend\modules\system\views\scripts\translation\index.phtml(274): Zend_View->modalDialog(Object(Form_Translation), 'dialog-add', '???????????? ??...')
+#9 C:\wamp\www\freeman\library\Zend\View.php(108): include('C:\wamp\www\fre...')
+#10 C:\wamp\www\freeman\library\Zend\View\Abstract.php(880): Zend_View->_run('C:/wamp/www/fre...')
+#11 C:\wamp\www\freeman\library\Zend\Controller\Action\Helper\ViewRenderer.php(897): Zend_View_Abstract->render('translation/ind...')
+#12 C:\wamp\www\freeman\library\Zend\Controller\Action\Helper\ViewRenderer.php(918): Zend_Controller_Action_Helper_ViewRenderer->renderScript('translation/ind...', NULL)
+#13 C:\wamp\www\freeman\library\Zend\Controller\Action\Helper\ViewRenderer.php(957): Zend_Controller_Action_Helper_ViewRenderer->render()
+#14 C:\wamp\www\freeman\library\Zend\Controller\Action\HelperBroker.php(277): Zend_Controller_Action_Helper_ViewRenderer->postDispatch()
+#15 C:\wamp\www\freeman\library\Zend\Controller\Action.php(523): Zend_Controller_Action_HelperBroker->notifyPostDispatch()
+#16 C:\wamp\www\freeman\library\Zend\Controller\Dispatcher\Standard.php(295): Zend_Controller_Action->dispatch('indexAction')
+#17 C:\wamp\www\freeman\library\Zend\Controller\Front.php(954): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#18 C:\wamp\www\freeman\library\Zend\Application\Bootstrap\Bootstrap.php(97): Zend_Controller_Front->dispatch()
+#19 C:\wamp\www\freeman\library\Zend\Application.php(366): Zend_Application_Bootstrap_Bootstrap->run()
+#20 C:\wamp\www\freeman\public\admin\index.php(36): Zend_Application->run()
+#21 {main}

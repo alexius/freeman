@@ -8,7 +8,10 @@
  */
 class Zend_View_Helper_ModalDialog extends Zend_View_Helper_Abstract 
 {
-	
+	public function setView(Zend_View_Interface $view)
+    {
+		$this->view = $view;
+	}
 	/**
 	 * 
 	 * Build dialog div
@@ -22,8 +25,11 @@ class Zend_View_Helper_ModalDialog extends Zend_View_Helper_Abstract
 	{
 		$dialog = '<div id="' . $id . '" 
 			title="' . $title . '" 
-			class="modal-dialogue ' . $class. '">
-			<p class="errors"></p>';
+			class="modal-dialogue ' . $class. '">';
+
+        $dialog .= $this->view->notification(null, 'error');
+        $dialog .= $this->view->notification(null, 'success');
+
 		$dialog .= $body;
 		$dialog .= '</div>';
 		return $dialog;			

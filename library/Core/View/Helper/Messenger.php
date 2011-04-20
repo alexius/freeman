@@ -12,7 +12,8 @@ class Zend_View_Helper_Messenger
 	protected static $_httpPath = null;
 	protected static $_baseHttpPath = null;
 	
-	public function setView(Zend_View_Interface $view) {
+	public function setView(Zend_View_Interface $view)
+    {
 		$this->view = $view;
 	}
 	

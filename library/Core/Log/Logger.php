@@ -123,18 +123,11 @@ class Core_Log_Logger
 			}
 		}
 
-        $params = '';
-        foreach ($request->getParams() as $key => $value)
-        {
-            $params .= $key . ':' . $value . ';';
-        }
-
 		$data += array( 
 			'access_path' => $module . '/' . $controller . '/' .$action,
 			'ip' =>  $ip,
 			'action_desc' => $act, 
-			'message' => self::$_eventsTypes[$type],
-            'params' => $params
+			'message' => self::$_eventsTypes[$type]
 		);
 			
 		self::insertEvent($data);
@@ -176,18 +169,11 @@ class Core_Log_Logger
 			$userLog = 'Анонимный Пользователь (' . $ip . ')';
 		}
 
-        $params = '';
-        foreach ($request->getParams() as $key => $value)
-        {
-            $params .= $key . ':' . $value . ';';
-        }
-
 		$data = $data + array( 
 			'action_desc' => $exception->getMessage(),
 			'ip' =>  $ip,
 			'message' => $exception->getTraceAsString(),
 			'access_path'  => $module . '/' . $controller . '/' . $action,
-            'params' => $params
 		);
 			
 		// Logging error into file

@@ -3,3 +3,5 @@
 .elements-wrapper { float:left; }
 .forms p {width: 100%;}
 .form {width:100%;}
+.input-submit {font-family: Helvetica, Arial, sans-serif !important; font-size:12px !important;}
+.notification-message {font-family: Helvetica, Arial, sans-serif !important;}

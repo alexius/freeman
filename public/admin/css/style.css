@@ -47,7 +47,7 @@ h6            { font-size: 12px; padding: 0 0 5px 0; }
 
 a              { color: #57a000; text-decoration: none; }
 a:hover     { cursor:pointer; text-decoration: underline; }
-a:active     { color: #777; }
+a:active     { color: #eee; }
 a:focus     { outline: 1px; }
 
 strong       { font-weight: bold; color: #333; }
@@ -58,7 +58,7 @@ pre           { font-family: monospace; }
 
 p {
                 padding: 5px 0 10px 0;
-                line-height: 1.6em;
+               /* line-height: 1.6em;*/
                 }
 
 /********************************      General Classes      ********************************/
@@ -292,8 +292,9 @@ a.remove-link:hover {
 /* Unordered List */
 
 #main-content ul li {
-                background: url('../images/icons/bullet_black.png') center left no-repeat;
+                background: url('../images/icons/bullet_black.png') 3px left no-repeat;
                 padding: 4px 0 4px 20px;
+         
                 }
 
 /* Ordered List */
@@ -762,7 +763,7 @@ body#login {
 }
 
 
-.modal-dialogue { display: none; }
+.modal-dialogue, .no-display { display: none; }
 
 
 .sidebar-hide { display:none;}
@@ -791,8 +792,6 @@ table .even {
 table .odd {
 	background-color: #FFFFFF;
 }
-
-.no-display { display:none; }
 
 .menu-scroll {position:relative;}
 

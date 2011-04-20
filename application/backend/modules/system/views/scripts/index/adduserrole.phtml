@@ -16,14 +16,11 @@
 
 	foreach ($usersRoles as $ur)
 	{
-		if ($user->user_id != $ur['user_id'])
-		{
-			$from->user_id->addMultiOption($ur['user_id'], $ur['name'] . ' ' . $ur['surname']);
-			$from->populate($ur);
-			echo $from;
-			echo '<div class="clear"></div>';
-			echo '<hr>';
-		}
+		$from->user_id->addMultiOption($ur['user_id'], $ur['name'] . ' ' . $ur['surname']);
+		$from->populate($ur);
+        echo $from;
+		echo '<div class="clear"></div>';
+		echo '<hr>';
 	}
 	
 ?>
