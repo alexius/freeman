@@ -1,0 +1,30 @@
+<style>
+#tree {
+	float:left;
+	margin: 20px;
+-moz-background-clip:border;
+-moz-background-inline-policy:continuous;
+-moz-background-origin:padding;
+background:#FFFFFF none repeat scroll 0 0;
+border-color:#BBBBBB #FFFFFF #FFFFFF #BBBBBB;
+border-style:solid;
+border-width:1px;
+height:400px;
+overflow:scroll;
+padding:5px;
+width:200px;
+}
+</style>
+<script type="text/javascript" src="<?php echo $this->LinkTo ();?>jqueryFileTree/jqueryFileTree.js" ></script>
+<link rel="stylesheet" type="text/css" media="screen"  href="<?php echo $this->LinkTo ();?>jqueryFileTree/jqueryFileTree.css" ></link>
+<script type='text/javascript'>
+$(document).ready(function(){
+
+	 $('#tree').fileTree({ root: '/' }, function(file) {
+	        alert(file);
+	    });
+});
+</script>
+
+<div id = 'tree'></div>
+

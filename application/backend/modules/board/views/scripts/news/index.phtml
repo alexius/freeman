@@ -1,0 +1,56 @@
+<script type="text/javascript" src="<?php echo $this->LinkTo ();?>scripts/grid/jquery.simplegrid.js" ></script>
+<script type='text/javascript'>
+$(document).ready(function(){
+     $(".simplegridy").simplegrid({
+        url: '/admin/news/index',
+        save_url: "/admin/news/inlinesave",
+        edit_url: "/admin/news/edit/id/",
+        delete_url: "/admin/news/delete/id/",              
+        colNames:['№','Название', 'Категория', 'Адрес Страници', 'Включен'],
+        colModel :[    
+            {name: 'id', filter: 'range', width: "49px", index: true}, 
+            {name: 'name', celledit: true, filter: 'name', width: "80px"},
+            {name: 'category', celledit: true, filter: 'name', width: "80px"},    
+            {name: 'url', celledit: true, filter: 'name', width: "80px"},
+            {name: 'active', celledit: true, filter: 'option', width: "20px", type: 'checkbox'}
+        ],
+        fulledit: false,
+        inlineedit: true,
+        filters: true,
+        sortdir: 'asc',
+        sortcol: 'id',            
+        rows: 10
+     });
+});
+</script>
+
+<div id = "page-content-wrapper">  
+    <div class="inner-page-title">
+        <h3>Управление новостями</h3>
+    </div>
+    <div class = "column-content-box">
+        <div class= "content-box">
+            <div class="other">
+                <div id = "status" class="float-left message-height"></div>
+                <div class="button float-right">
+                    <a class="btn ui-state-default ui-corner-all" 
+                        href="<?php echo $this->linkTo()?>news/edit">
+                        <span class="ui-icon ui-icon-circle-plus"></span>
+                       Добавить новость      
+                    </a>
+                </div>  
+            </div>
+            <div class="clearfix"></div> 
+            <div class = 'grid-block'>
+                <div class = "simplegridy hastable"></div>      
+                <div class="clearfix"></div>          
+            </div>  
+        </div>                 
+    </div>       
+    <div class="clearfix"></div>   
+</div>
+
+<div id="confirm" class="delete-block" title="Удалить новость">
+    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+     Вы уверены, что хотите удалть данную новость?</p>
+</div>

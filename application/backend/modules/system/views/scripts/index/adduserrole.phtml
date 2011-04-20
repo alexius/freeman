@@ -1,0 +1,29 @@
+<?php
+	$usersRoles = $this->service->getMapper()->getUsersRoles();
+	$roles = array ('0' => $this->translation('no')) + $this->service->getMapper()->getRolesPairs();
+	$from = new Form_UserRole();
+	$from->role_id->setMultiOptions($roles);
+	$user = Core_Model_User::getInstance();
+	
+	if ($this->service->getError())
+	{		
+		echo '<span class="error">' . $this->service->getError() . '</span>';
+	}
+		
+	
+		
+//	$users = $this->service->getMapper()->getUsersPairs();
+
+	foreach ($usersRoles as $ur)
+	{
+		if ($user->user_id != $ur['user_id'])
+		{
+			$from->user_id->addMultiOption($ur['user_id'], $ur['name'] . ' ' . $ur['surname']);
+			$from->populate($ur);
+			echo $from;
+			echo '<div class="clear"></div>';
+			echo '<hr>';
+		}
+	}
+	
+?>

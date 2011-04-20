@@ -1,0 +1,275 @@
+<?php $host = $this->domainLink();
+?>
+
+<div class="error-wrapper">
+	<?php echo $this->messenger($this->service->getError(), 0); ?>
+</div>
+
+<div class="message-wrapper">
+	<?php echo $this->messenger($this->service->getMessage(), 1); ?>
+</div>
+
+
+<div class="clear"></div>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		var filters = <?php echo Zend_Json::encode($this->service->filters());?>;
+        $('select[name="system"] [value="<?php echo $this->system ?>"]').attr("selected", "selected");
+		var module = '';
+		
+		$('select[name="fmodule"]').change(function(){
+			module = $(this).val();
+			showSelectedResouses(module);
+		});
+
+		$('select[name="fresourse"]').change(function(){
+			var res = $(this).val();
+			showSelectedActions(res, module);
+		});
+
+
+        $('select[name="system"]').change(function(){
+            var href = '<?php echo $this->domainLink(); ?>'+'translation/index/';
+            window.location.replace(href);
+        });
+
+
+		$('.show-translation').click(function(){
+			$('.translations .button').addClass('no-display');
+			$('.translations .data').html('<img src="<?php echo $this->domainLink(1) . 'images/spinner_big.gif'; ?>">');
+			$('.ajax-forms').ajaxSubmit(  {
+				success:    function(responseText, q, y, forma) {
+					var ans_json = responseText;
+					if (ans_json.data){
+						$('.translations .data').html(ans_json.data);
+						$('.translations .button-display').removeClass('no-display');
+					} else {
+						$('.translations .data').html('');
+					}
+				}
+			});
+		});
+
+		$('.save-translation').click(function(){
+			var buttonWrapper= $(this).parent().parent().parent();
+			$('.spinner-wrapper', buttonWrapper).html('<img class="spinner" ' +
+				'src="<?php echo $this->domainLink(1) . 'images/spinner.gif'; ?>">');
+            var action = $('.ajax-formss').attr('action');
+
+			$('.ajax-formss').ajaxSubmit(  {
+				success:    function(responseText, q, y, forma) {
+					var ans_json = responseText;
+					if (ans_json.error == 'true') {
+						errorMessage(ans_json.error_message);
+					}
+					if (ans_json.message) {
+						successMessage(ans_json.message);
+					}
+					$('.translations .spinner').remove();
+				}
+			});
+		});
+
+		$('.add-translation').click( function () {
+			var href = $(this).attr('href');
+			$('#dialog-add').dialog({
+				resizable: false,
+				height:500,
+				width: 450,
+				modal: true,
+				buttons: {
+					"Ок": function() {
+						$('#dialog-add .errors').html('<img class="spinner" ' +
+							'src="<?php echo $this->domainLink(1) . 'images/spinner.gif'; ?>">');
+						$('#translation').attr('action', href);
+						$('#translation').ajaxSubmit({
+						    success:    function(responseText) {
+								$('#dialog-add .errors, .ajax-errors').html('');
+								var ans_json = responseText;
+								if (ans_json.error == 'true') {
+									$('#dialog-add .errors').html(ans_json.error_message);
+								}
+
+								if (ans_json.formMessages){
+									$('#dialog-add .ajax-errors').remove();
+									$.each(ans_json.formMessages, function (i, item){
+										var err = '<ul class="ajax-errors">';
+										$.each(item, function (erri, errText){
+											err += '<li>' + errText + '</li>';
+
+										});
+										err += '</ul>';
+										$('#' + i).parent().append(err);
+									});
+								}
+
+								if (ans_json.message) {
+									$('#dialog-add .errors').html(ans_json.message);
+									
+								}
+
+								return false;
+						    }
+
+					});
+						return false;
+					},
+					'<?php echo $this->translation('close')?>': function() {
+							$( this ).dialog( "close" );
+						return false;
+					}
+				}
+			});
+			return false;
+		});
+
+		function showSelectedResouses(moduleSel)
+		{
+			$.each(filters, function(module, resourses)
+			{
+				if (moduleSel == module)
+				{
+					var options = '';
+					var i = 0;
+					$.each(resourses, function(resourse, action){
+						options += '<option>' + resourse + '</option>';
+						i++;
+						if (i == 1){
+							showSelectedActions(resourse, moduleSel);
+						}
+					})
+					$('select[name="fresourse"]').html(options);
+				}
+			});
+		}
+
+		function showSelectedActions(resSel, modSel)
+		{
+			var options = '';	
+			$.each(filters, function(module, resourses)
+			{
+				$.each(resourses, function(resourse, actions)
+				{
+					$.each(actions, function(i, action)
+					{
+						if (resSel == resourse && module == modSel)
+						{
+							options += '<option>' + action + '</option>';
+						}
+					});
+				});
+				$('select[name="faction"]').html(options);
+			});
+		}
+	});
+</script>
+
+
+<?php
+    $filters = $this->service->filters();
+	if (empty($filters)){
+		return false;
+	}
+?>
+<form METHOD="POST" class="ajax-forms form" action=''>
+
+<?php
+	$modulesLst = '';
+	$resoursesLst = '';
+	$actionsLst = '';
+	foreach ($filters as $module => $resourses)
+	{
+		$modulesLst .= '<option value="' . $module . '">' . $module . '</option>';
+	}
+	$modulesLst = '<select name="fmodule"><option value="0">' . $this->translation('select_module') .'</option>' . $modulesLst . '</select>';
+	$resoursesLst = '<select name="fresourse"><option value="0">' . $this->translation('select_page') .'</option></select>';
+	$actionsLst = '<select name="faction"><option value="0">' . $this->translation('select_resourse') .'</option></select>';
+
+?>
+
+<div class="float-left padding-left">
+	<b><?php echo $this->translation('module')?></b>
+	<br><?php echo $modulesLst?>
+</div>
+<div class="float-left padding-left">
+	<b><?php echo $this->translation('resourse')?></b>
+	<br><?php echo $resoursesLst?>
+</div>
+<div class="float-left padding-left">
+	<b><?php echo $this->translation('page')?></b>
+	<br><?php echo $actionsLst?>
+</div>
+<div class="padding-left float-left ">
+	<b><?php echo $this->translation('search_by_word')?></b>
+	<br><input type="text" name ="search" class="big-input">
+</div>
+
+<div class="clear"></div>
+
+<div class="padding-left buttons-left">
+	<div>
+		<?php echo $this->buttonLink(
+			'#search',
+			$this->translation('show'), '',
+			'show-translation');
+		?>
+	</div>
+	<div>
+		<?php echo $this->buttonLink(
+			$host . 'translation/add/',
+			$this->translation('add'), '',
+			'add-translation');
+		?>
+	</div>
+</div>
+<div class="clear"></div>
+</form>
+<hr>
+	
+<div class="translations padding-left">
+	<form class="ajax-formss" method="POST"  action="<?php echo $host . 'translation/save/'?>">
+		<div class="no-display button-display">
+			<div class="button-wrapper">
+			<?php
+				echo $this->buttonLink(
+					null,
+					$this->translation('save'),
+					null,
+					'save-translation'
+				);
+			?>
+			</div>
+			<div class="spinner-wrapper"></div>
+			<div class="clear"></div>
+		</div>
+
+		<div class="data"></div>
+
+		<div class="no-display button-display">
+			<div class="button-wrapper">
+			<?php
+				echo $this->buttonLink(
+					null,
+					$this->translation('save'),
+					null,
+					'save-translation'
+				);
+			?>
+			</div>
+			<div class="spinner-wrapper"></div>
+			<div class="clear"></div>
+		</div>
+		
+	</form>
+</div>
+
+<?php
+	$form = new Form_Translation();
+	$form->removeElement('sub');
+
+	echo $this->modalDialog(
+		$form, 'dialog-add', $this->translation('set_translation')
+
+	);
+?>

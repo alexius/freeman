@@ -1,0 +1,59 @@
+<?php print $this->doctype(Zend_View_Helper_Doctype::XHTML1_TRANSITIONAL); ?>
+<?php $host = $this->LinkTo (); ?>
+<html>
+	 <head>
+	<?php 
+		echo $this->headMeta ()->appendHttpEquiv ( 'Content-Type', 'text/html; charset=UTF-8' );
+		echo $this->headTitle ( 'Панель управления' );
+
+		$this->headScript()
+			->appendFile($host . "scripts/jquery-1.5.1.min.js")
+			->appendFile($host . "scripts/cookie.js") 
+			->appendFile($host . "scripts/pngfix.js") 
+			->appendFile($host . "scripts/superfish.js")
+			->appendFile($host . "scripts/tooltip.js") 
+			->appendFile($host . "scripts/custom.js") 
+			->appendFile($host . "scripts/jquery-ui-1.7.2.js")
+             ->appendFile($host . "scripts/tiny_mce/jquery.tinymce.js");
+			
+		$this->headLink()
+			->appendStylesheet($host . "styles/ui/ui.base.css")
+            ->appendStylesheet($host . "styles/themes/ui.css");
+		echo $this->headScript ();
+		echo $this->headLink ();		
+	?>
+		
+	<!--[if IE 6]>
+	<link href="<?php echo $host;?>styles/css/ie6.css" rel="stylesheet" media="all" />
+	
+	<script src="<?php echo $host?>scripts/pngfix.js"></script>
+	<script>
+	  /* EXAMPLE */
+	  DD_belatedPNG.fix('.logo, .other ul#dashboard-buttons li a');
+
+	</script>
+	<![endif]-->
+	<!--[if IE 7]>
+	<link href="<?php echo $host;?>styles/css/ie7.css" rel="stylesheet" media="all" />
+	<![endif]-->
+<style>
+.ui-dialog .ui-dialog-titlebar-close {display:none;}
+</style>
+	</head>
+
+<body>
+	<div id="welcome_login" title="Добро пожаловать!">
+
+	<?php
+			$this->form->password->removeDecorator('Errors');
+			$this->form->login->removeDecorator('Errors');
+			if ($this->message || $this->form->isErrors())
+					echo "<div class='response-msg error ui-corner-all'>
+									<span>Ошибка входа!</span>
+									Логин или пароль указаны не верно! 
+								</div>";
+					echo $this->form 
+				?>
+	</div>
+</body>
+</html>

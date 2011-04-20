@@ -1,0 +1,26 @@
+<script type="text/javascript" src="<?php echo $this->LinkTo ();?>scripts/grid/jquery.simplegrid.js" ></script>
+<script type='text/javascript'>
+$(document).ready(function(){
+	 $(".simplegridy").simplegrid({
+		   url:'/admin/categories/index/',
+		   save_url: "/admin/categories/inlinesave/",
+		   delete_url: "/admin/categories/delete/",
+		   edit_url: "/admin/categories/edit/",
+		   colNames:['№','Название', 'Адрес', 'Включен'],
+		   colModel :[	{name: 'id', width: "30px", filter: 'range', index: true}, 
+			   		   	{name: 'name', celledit: true, width: "100px", filter: 'name'},
+			   		   	{name: 'url',  celledit: true, width: "100px", filter: 'name'},
+			   		   	{name: 'active', celledit: true, width: "30px"}
+   		   ],
+   		   fulledit: false,
+   		   inlineedit: true,
+      	   filters: true,
+   		   sortdir: 'asc',
+   		   sortcol: 'name',      	  
+   		   rows: 10
+	  });
+});
+</script>
+<a href = "<?php echo $this->linkTo()?>categories/edit">Добавить категорию</a>
+
+<div class = "simplegridy"></div>

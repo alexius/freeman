@@ -1,0 +1,46 @@
+<div class = 'edit-block portlet ui-widget ui-widget-content ui-helper-clearfix ui-corner-all form-container'>
+	<form enctype="multipart/form-data" 
+			action = "<?= $this->linkTo()?>products/ajaxsubmit/"
+			 method="post" name="order" id="order" class ="commonform forms edit-form">
+	<div class = "portlet-content">
+	<ul>
+		<div class = 'general_info fields' id = "ttab1">
+			<?php
+				echo $this->element->name; 
+				echo $this->element->model; 
+				echo $this->element->manufacturer; 
+				echo $this->element->status; 
+                echo $this->element->show_mainpage;      
+				echo $this->element->url;
+				echo $this->element->date_add;
+				echo $this->element->price;
+                echo $this->element->currency;  
+				echo $this->element->position;
+				echo $this->element->set;
+			?>
+		</div>	
+		<div class = 'desc_info fields' id = "ttab2">
+			<?php 
+         //       echo $this->element->catalog_preview;    
+				echo $this->element->short_desc;
+				echo $this->element->desc;
+			?> 
+		</div>
+		<div class = 'meta_info fields' id = "ttab3">
+			<?php
+				echo $this->element->meta_title;
+				echo $this->element->meta_keywords;
+				echo $this->element->meta_desc; 
+			?>
+		</div>	
+		<div class = 'product-attributes fields' id = "ttab6">
+			<?php echo ($this->element->attributes); ?>
+			<div style = 'clear:both;'></div>
+		</div>
+		<div style = 'clear:both;'></div>
+	</ul>
+	</div>
+	<div style = 'clear:both;'></div>
+	<?php echo $this->element->id; ?> 
+	</form>
+</div>

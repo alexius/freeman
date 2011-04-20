@@ -1,0 +1,96 @@
+<?php $host = $this->linkTo();?>
+<script type="text/javascript" src="<?php echo $host?>scripts/jquery.form.js" ></script>
+<script type="text/javascript" src="<?php echo $host?>scripts/pagesFunctions.js" ></script>
+
+<!-- markItUp! -->
+<script type="text/javascript" 
+src="<?php echo $host?>/markitup/jquery.markitup.js"></script>
+<!-- markItUp! toolbar settings -->
+<script type="text/javascript" 
+src="<?php echo $host?>/markitup/sets/html/set.js"></script>
+<!-- markItUp! skin -->
+<link media="all" rel="stylesheet" type="text/css" 
+href="<?php echo $host?>/markitup/skins/markitup/style.css" />
+<!--  markItUp! toolbar skin -->
+<link media="all" rel="stylesheet" type="text/css" 
+href="<?php echo $host?>/markitup/sets/html/style.css" />
+<link media="all" rel="stylesheet" type="text/css" 
+href="<?php echo $host?>/markitup/sets/css/style.css" />
+
+<script type="text/javascript">
+
+$(document).ready( function() {
+    
+    
+	var base_url = "<?php echo  $host?>";
+	var url = base_url + "pages/getform/";
+	var back_url = base_url + "pages/";
+	var url_cont = base_url + "pages/ajaxsubmit/";
+	var url_redirect = base_url + "pages/";
+	var del_url = base_url + "pages/delete/";
+
+    initFormEvents(url_cont, url_redirect, del_url);
+    initMarkItUp();      
+});
+</script>
+<?php
+if (isset($this->id) && $this->id > 0){
+	$page = $this->service->getMapper()->fetchId($this->id);
+	$title = 'Страница "' .$page->name . '"';
+	
+	$form = $this->service->getForm();
+
+	$form->populate($page->toArray());
+}
+else {
+	$form = $this->service->getForm();
+	$title = 'Добавление новой страници';
+}
+if (isset($this->message)){
+	echo '<h2>' . $this->message . '</h2>';
+}
+?>
+  
+<div id = "page-content-wrapper">  
+    <div class="inner-page-title">
+        <h3><?php echo $title?></h3>
+    </div>
+    <div class = "column-content-box">
+        <div class= "content-box">
+            <div class="other">              
+                <div class="button float-right">
+                    <a href = "<?= $this->linkTo()?>pages/index/" class="btn ui-state-default ui-corner-all">
+                        <span class="ui-icon ui-icon-circle-triangle-w"></span>
+                        Назад
+                    </a>
+                    <a class="btn ui-state-default ui-corner-all binded-href"  id="save">
+                        <span class="ui-icon ui-icon-circle-check"></span>
+                        Сохранить
+                    </a>
+                    <a class="btn ui-state-default ui-corner-all binded-href" id="savestay">
+                        <span class="ui-icon ui-icon-circle-check"></span>
+                        Сохранить и продолжить
+                    </a>
+                    <?php if (isset($this->id)) {?>
+                    <a class="btn ui-state-default ui-corner-all binded-href" id="delete">
+                        <span class="ui-icon ui-icon-circle-close"></span>
+                        Удалить
+                    </a>
+                    <?php } ?>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class = 'edit-form'><?php echo $form ?></div>
+            <div id = "status" class="float-left"></div>       
+            <div class = "clear"></div>     
+        </div>                 
+    </div>       
+    <div class="clearfix"></div>   
+</div>
+
+
+<div id="confirm" title="Удалить страницу">
+    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+     Вы уверены, что хотите удалть данную страницу?</p>
+</div>
+               <div id="imgs"></div>  

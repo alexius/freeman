@@ -1,0 +1,77 @@
+<style>
+.simplegridy{
+	padding: 20px;
+}
+.grid-table {
+	border: 1px solid grey;
+}
+.grid-table th{
+	background-color: #000;
+	color: #FFF;
+	padding: 8px;	
+	font-size:10px;
+	font-family: arial;
+	font-weight:normal;
+}
+.grid-table td{
+	padding: 5px;	
+}
+
+.grid-table .even{
+	background-color: #F7F7F7;	
+}
+
+.grid-table .odd{
+	background-color: white;	
+}
+.grid-table .hover{
+	background-color: blue;	
+}
+.grid-table .hover-row{
+	background-color: #B2D2FF;	
+}
+div.pager-nav{
+	float:left;
+}
+div.pager-nav a{
+	color: #1777B8;
+}
+div.pager-nav a:hover{
+	color: #F26D00;
+}
+div.pager-info{
+	float:left;
+	padding-left: 10px;
+}
+table.grid-table thead tr th.clickable{
+	cursor: pointer;
+}
+table.grid-table .current{
+	background-color: #00CCCC;
+	
+}
+</style>
+<script type="text/javascript" src="<?php echo $this->LinkTo ();?>grid/jquery.simplegrid.js" ></script>
+<script type="text/javascript" src="<?php echo $this->LinkTo ();?>jqueryFileTree/jqueryFileTree.js" ></script>
+<link rel="stylesheet" type="text/css" media="screen"  href="<?php echo $this->LinkTo ();?>jqueryFileTree/jqueryFileTree.css" ></link>
+<script type='text/javascript'>
+$(document).ready(function(){
+	 $(".simplegridy").simplegrid({
+		   url: '/admin/settings/index',
+		   save_url: "/admin/simplepages/savepage",
+		   colNames:['№','Код параметра', 'Значение', 'Описание'],
+		   colModel :[	{name: 'param_id', filter: 'range', width: "30px"}, 
+			   		   	{name: 'param_name', celledit: true, filter: 'name', width: "70px"},
+			   		   	{name: 'param_value', celledit: true, filter: 'name', width: "100px"},
+			   		   	{name: 'param_description', celledit: true, filter: 'name', width: "200px"}
+   		   ],
+   		   sortdir: 'asc',
+      	   filters: true,
+   		   sortcol: 'param_id',
+   		   rows: 5
+	  });
+
+});
+</script>
+
+<div class = "simplegridy"></div>

@@ -1,0 +1,55 @@
+<script type="text/javascript" src="<?php echo $this->LinkTo ();?>scripts/grid/jquery.simplegrid.js" ></script>
+<script type='text/javascript'>
+$(document).ready(function(){
+     $(".simplegridy").simplegrid({
+        url: '/admin/menu/index',
+        save_url: "/admin/menu/inlinesave",
+        edit_url: "/admin/menu/edit/id/",
+        delete_url: "/admin/menu/delete/id/",           
+        colNames:['№','Название', 'Адрес', 'Включен'],
+        colModel :[    
+            {name: 'id', filter: 'range', width: "38px", index: true}, 
+            {name: 'name', celledit: true, filter: 'name', width: "100px"},
+            {name: 'url', celledit: true, filter: 'name', width: "100px"},
+            {name: 'active', celledit: true, filter: 'option', width: "30px", type: 'checkbox'}
+        ],
+        fulledit: false,
+        inlineedit: true,
+        filters: true,
+        sortdir: 'asc',
+        sortcol: 'id',            
+        rows: 10
+     });
+});
+</script>
+
+  
+<div id = "page-content-wrapper">  
+    <div class="inner-page-title">
+        <h3>Управление меню</h3>
+    </div>
+    <div class = "column-content-box">
+        <div class= "content-box">
+            <div class="other ">                                     
+                <div id = "status" class="float-left message-height"></div>
+                <div class="button float-right">
+                    <a class="btn ui-state-default ui-corner-all" 
+                        href="<?php echo $this->linkTo()?>menu/edit">
+                        <span class="ui-icon ui-icon-circle-plus"></span>
+                        Добавить пункт   
+                    </a>
+                </div>
+            </div>
+             <div class="clearfix"></div> 
+            <div class = 'grid-block'>
+                <div class = "simplegridy hastable"></div>      
+                <div class="clearfix"></div>          
+            </div>  
+        </div>                 
+    </div>       
+    <div class="clearfix"></div>   
+</div>
+<div id="confirm" class="delete-block" title="Удалить пункт меню">
+    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+     Вы уверены, что хотите удалть данный пункт меню?</p>
+</div>

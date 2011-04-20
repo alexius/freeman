@@ -1,0 +1,60 @@
+<?php echo $this->doctype ( Zend_View_Helper_Doctype::XHTML1_TRANSITIONAL );?>
+<?php $host = $this->domainLink (1);?>
+<html>
+<head>
+
+	<?php echo $this->headMeta ()->appendHttpEquiv ( 'Content-Type', 'text/html; charset=UTF-8' );?>
+	<?php echo $this->headTitle ( 'Панель управления' );?>
+	<?php
+
+
+
+
+		$this->headScript()
+			->appendFile($host . "js/jquery-1.5.2.min.js")
+            ->appendFile($host . "js/tooltip.js")
+			->appendFile($host . "js/simpla.jquery.configuration.js")
+			->appendFile($host . "js/facebox.js")
+			->appendFile($host . "js/jquery.form.js")
+            ->appendFile($host . "js/jquery.transliterate-min.js");
+    
+        $this->headLink()
+            ->appendStylesheet($host . "css/reset.css")
+			->appendStylesheet($host . "css/style.css")
+			->appendStylesheet($host . "css/invalid.css")
+            ->appendStylesheet($host . "css/form.css");
+	?>
+
+	<!--[if lte IE 7]>
+			<link rel="stylesheet" href="<?php $host ?>css/ie.css" type="text/css" media="screen" />
+	<![endif]-->
+    <!--[if IE 6]>
+			<script type="text/javascript" src="<?php $host ?>js/DD_belatedPNG_0.0.7a.js"></script>
+			<script type="text/javascript">
+				DD_belatedPNG.fix('.png_bg, img, li');
+			</script>
+	<![endif]-->
+
+	<?php echo $this->headLink ();?>
+	<?php echo $this->headScript ();?>
+
+</head>
+	<body id="login">
+		
+		<div id="login-wrapper" class="png_bg">
+			<div id="login-top">
+			
+				<h1>Free Admin</h1>
+				<!-- Logo (221px width) -->
+				<img id="logo" src="<?php echo $this->domainLink(1) ?>images/logo.png" alt="Free Admin logo" />
+			</div> <!-- End #logn-top -->
+			
+			<div id="login-content">
+				<?php echo $this->layout()->content;?>
+
+			</div> <!-- End #login-content -->
+			
+		</div> <!-- End #login-wrapper -->
+		
+  </body>
+  </html>

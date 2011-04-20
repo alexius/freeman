@@ -1,0 +1,95 @@
+<?php $host = $this->LinkTo ();?>
+<script type="text/javascript" src="<?php echo $host ?>scripts/jqueryFileTree/categoryTree.js" ></script>
+<script type="text/javascript" src="<?php echo $host?>scripts/categoryAjax.js" ></script>
+<script type="text/javascript" src="<?php echo $host?>scripts/jquery.form.js" ></script>
+<script type="text/javascript" src="<?php echo $host?>scripts/ui.droppable.js" ></script>
+<script type="text/javascript" src="<?php echo $host?>scripts/jquery.ui.sortable.js" ></script>    
+<link rel="stylesheet" type="text/css" media="screen"  href="<?php echo $host?>styles/jqueryFileTree.css" ></link>
+
+<!-- markItUp! -->
+<script type="text/javascript" 
+src="<?php echo $host?>/markitup/jquery.markitup.js"></script>
+<!-- markItUp! toolbar settings -->
+<script type="text/javascript" 
+src="<?php echo $host?>/markitup/sets/html/set.js"></script>
+<!-- markItUp! skin -->
+<link media="all" rel="stylesheet" type="text/css" 
+href="<?php echo $host?>/markitup/skins/markitup/style.css" />
+<!--  markItUp! toolbar skin -->
+<link media="all" rel="stylesheet" type="text/css" 
+href="<?php echo $host?>/markitup/sets/html/style.css" />
+<link media="all" rel="stylesheet" type="text/css" 
+href="<?php echo $host?>/markitup/sets/css/style.css" />
+
+<script>
+$(document).ready( function() {
+	var url = "<?= $host?>categories/getform/";
+	var del_url = "<?= $host?>categories/delete/";
+	var cat_id;
+	$('.category-tree').fileTree(
+		{ script: '/admin/categories/getcategorytree'}, 
+        function(id) {
+        	cat_id = id;
+        	getCategoryForm(id, url, del_url);  
+        }
+	);
+    $('#add_root').click(
+    	function () {
+     		getCategoryForm('', url, del_url);
+         }
+    );
+    $('#add_sub').click(
+    	function () {
+     		getSubCategoryForm('', url, cat_id, del_url);
+        }
+    );
+    initFormEvents(del_url);
+  
+
+});
+</script>
+<?php
+if (isset($this->message)){
+	echo '<h2>' . $this->message . '</h2>';
+}
+?>
+
+
+<div id = "page-content-wrapper">  
+    <div class="inner-page-title">
+        <h3>Управление категориями</h3>
+    </div>
+    <div class = "column-content-box">
+        <div class= "content-box">
+            <div class="other">
+                <div id = "status" class="float-left message-height"></div>
+                <div class="button float-right">
+                    <a class="btn ui-state-default ui-corner-all binded-href"  id = "add_root">
+                        <span class="ui-icon ui-icon-circle-plus"></span>
+                        Добавить корневую категорию
+                    </a>
+                    <a class="btn ui-state-default ui-corner-all binded-href" id = "add_sub">
+                        <span class="ui-icon ui-icon-circle-plus"></span>
+                        Добавить подкатегорию
+                    </a>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+             <div class="clearfix"></div>  
+            <div class = 'edit-cat-form edit-form'>
+                <?php echo $this->form ?>
+            </div>
+            <div class = "float-left column-smaller cat-block">
+                <div class = "category-tree cats"></div>
+            </div>
+            <div class="clearfix"></div>       
+        </div>                 
+    </div>       
+    <div class="clearfix"></div>   
+</div>
+
+
+<div id="confirm" title="Удалить категорию">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+	Удаление категории, удалит все её подкатегории. Вы уверены?</p>
+</div>

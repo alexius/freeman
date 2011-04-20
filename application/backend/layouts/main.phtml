@@ -1,0 +1,183 @@
+<?php echo $this->doctype ( Zend_View_Helper_Doctype::XHTML1_TRANSITIONAL );?>
+<?php $host = $this->domainLink (1);?>
+<html>
+<head>
+
+	<?php echo $this->headMeta ()->appendHttpEquiv ( 'Content-Type', 'text/html; charset=UTF-8' );?>
+	<?php echo $this->headTitle ( 'Панель управления' );?>
+	<?php
+
+
+
+
+		$this->headScript()
+			->appendFile($host . "js/jquery-1.5.2.min.js")
+            ->appendFile($host . "js/tooltip.js")
+			->appendFile($host . "js/simpla.jquery.configuration.js")
+			->appendFile($host . "js/facebox.js")
+			->appendFile($host . "js/jquery.form.js")
+            ->appendFile($host . "js/jquery.transliterate-min.js")
+            ->appendFile($host . "js/jquery-ui-1.8.11.custom.min.js")
+            ->appendFile($host . "js/jquery.scrollfollow.js")
+            ->appendFile($host . "js/basic.js")
+            ->appendFile($host . "js/jquery.cookie.js");
+
+        $this->headLink()
+            ->appendStylesheet($host . "css/reset.css")
+			->appendStylesheet($host . "css/style.css")
+			->appendStylesheet($host . "css/invalid.css")
+            ->appendStylesheet($host . "css/form.css")
+            ->appendStylesheet($host . "css/jquery.tooltip.css")
+            ->appendStylesheet($host . "css/south-street/jquery-ui-1.8.11.custom.css");
+	?>
+
+	<!--[if lte IE 7]>
+			<link rel="stylesheet" href="<?php echo $host ?>css/ie.css" type="text/css" media="screen" />
+	<![endif]-->
+    <!--[if IE 6]>
+			<script type="text/javascript" src="<?php echo $host ?>js/DD_belatedPNG_0.0.7a.js"></script>
+			<script type="text/javascript">
+				DD_belatedPNG.fix('.png_bg, img, li');
+			</script>
+	<![endif]-->
+
+	<?php echo $this->headLink ();?>
+	<?php echo $this->headScript ();?>
+
+</head>
+
+	<body>
+    <?php
+        $fauxClass = 'faux';
+        $sideBarBg = 'sidebar-background';
+        $sideBarBgWrp = '';
+        $sideBarBgWrpSmall = 'no-display';
+        $mainCont = 'main-content';
+        if ($this->hidden == 'true')
+        {
+            $mainCont = 'main-content-hidden';
+            $fauxClass = 'faux-hidden';
+            $sideBarBg = 'sidebar-background-hidden';
+            $sideBarBgWrp = 'no-display';
+            $sideBarBgWrpSmall = '';
+        }
+    ?>
+    <div class="<?php echo $fauxClass; ?>">
+        <div id="body-wrapper"> <!-- Wrapper for the radial gradient background -->
+
+
+
+		<div id="sidebar" class="<?php echo $sideBarBg?>">
+
+            <div id="sidebar-hidden" class="<?php echo $sideBarBgWrpSmall?>">
+                <ul id="icons-menu" class="ui-widget ui-helper-clearfix show-button">
+                    <?php
+                        echo $this->iconButton(
+                            null, 'ui-icon-circle-arrow-e', '', 'show-menu', '', ''
+                        );
+                    ?>
+                </ul>
+
+                <?php echo $this->smallMenu(); ?>
+            </div>
+
+           <div id="sidebar-wrapper" class="<?php echo $sideBarBgWrp?>"> <!-- Sidebar with logo and menu -->
+           <ul id="icons-menu" class="ui-widget ui-helper-clearfix hide-button">
+                <?php
+                    echo $this->iconButton(
+                        null, 'ui-icon-circle-arrow-w', '', 'hide', '', ''
+                    );
+               ?>
+			</ul>
+
+			<h1 id="sidebar-title"><a href="#">Simpla Admin</a></h1>
+		  
+			<!-- Logo (221px wide) -->
+			<a href="#"><img id="logo" src="<?php echo $host ?>images/logo.png" alt="Simpla Admin logo" /></a>
+		  
+			<!-- Sidebar Profile links -->
+			<div id="profile-links">
+				Hello, <a href="#" title="Edit your profile">John Doe</a>, you have <a href="#messages" rel="modal" title="3 Messages">3 Messages</a><br />
+				<br />
+				<a href="#" title="View the Site">View the Site</a> | <a href="<?php echo $host ?>default/index/logout/" title="Sign Out">Sign Out</a>
+			</div>        
+            <?php echo $this->menu(); ?>
+			
+			<div id="messages" style="display: none"> <!-- Messages are shown when a link with these attributes are clicked: href="#messages" rel="modal"  -->
+				
+				<h3>3 Messages</h3>
+			 
+				<p>
+					<strong>17th May 2009</strong> by Admin<br />
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna. Cras in mi at felis aliquet congue.
+					<small><a href="#" class="remove-link" title="Remove message">Remove</a></small>
+				</p>
+			 
+				<p>
+					<strong>2nd May 2009</strong> by Jane Doe<br />
+					Ut a est eget ligula molestie gravida. Curabitur massa. Donec eleifend, libero at sagittis mollis, tellus est malesuada tellus, at luctus turpis elit sit amet quam. Vivamus pretium ornare est.
+					<small><a href="#" class="remove-link" title="Remove message">Remove</a></small>
+				</p>
+			 
+				<p>
+					<strong>25th April 2009</strong> by Admin<br />
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna. Cras in mi at felis aliquet congue.
+					<small><a href="#" class="remove-link" title="Remove message">Remove</a></small>
+				</p>
+				
+				<form action="" method="post">
+					
+					<h4>New Message</h4>
+					
+					<fieldset>
+						<textarea class="textarea" name="textfield" cols="79" rows="5"></textarea>
+					</fieldset>
+					
+					<fieldset>
+					
+						<select name="dropdown" class="small-input">
+							<option value="option1">Send to...</option>
+							<option value="option2">Everyone</option>
+							<option value="option3">Admin</option>
+							<option value="option4">Jane Doe</option>
+						</select>
+						
+						<input class="button" type="submit" value="Send" />
+						
+					</fieldset>
+					
+				</form>
+				
+			</div> <!-- End #messages -->
+			
+		</div></div> <!-- End #sidebar -->
+		
+		<div id="main-content" class="<?php echo $mainCont ?>"> <!-- Main Content Section with everything -->
+			
+			<noscript> <!-- Show a notification if the user has disabled javascript -->
+				<div class="notification error png_bg">
+					<div>
+						Javascript is disabled or is not supported by your browser. Please <a href="../../../browsehappy.com/index.htm" title="Upgrade to a better browser">upgrade</a> your browser or <a href="../../../www.google.com/support/bin/answer_2EEFB1D5.py" title="Enable Javascript in your browser">enable</a> Javascript to navigate the interface properly.
+					</div>
+				</div>
+			</noscript>
+			
+			<!-- Page Head -->
+		    <?php
+                echo $this->pageTitle();
+                echo $this->layout()->content;
+            ?>
+			
+			<div id="footer">
+				<small> <!-- Remove this notice or replace it with whatever you want -->
+						&#169; Copyright 2011 Fedor Petryk | Powered by
+                    <a target=_blank href="http://themeforest.net/">Simpla Admin</a> |
+                    <a href="#">Top</a>
+				</small>
+			</div><!-- End #footer -->
+			
+		</div> <!-- End #main-content -->
+		
+	</div></body>
+  
+</html>

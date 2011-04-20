@@ -1,0 +1,19 @@
+
+  <h1><?php echo $this->translation('error_occur') ?></h1>
+  <h2><?php echo $this->message ?></h2>
+
+  <?php if ('development' == APPLICATION_ENV): ?>
+
+  <h3><?php echo $this->translation('error_information') ?></h3>
+  <p>
+      <b>Message:</b> <?php echo $this->exception->getMessage() ?>
+  </p>
+
+  <h3><?php echo $this->translation('stack') ?></h3>
+  <pre><?php echo $this->exception->getTraceAsString() ?>
+  </pre>
+
+  <h3><?php echo $this->translation('requested_parametrs') ?></h3>
+  <pre><?php echo var_export($this->request->getParams(), true) ?>
+  </pre>
+  <?php endif ?>

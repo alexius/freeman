@@ -1,0 +1,60 @@
+<script type="text/javascript" src="<?php echo $this->LinkTo ();?>scripts/grid/jquery.simplegrid.js" ></script>
+<script type='text/javascript'>
+$(document).ready(function(){
+	 $(".simplegridy").simplegrid({
+		   url:'/admin/products/index/',
+		   save_url: "/admin/products/inlinesave/",
+		   delete_url: "/admin/products/delete/id/",
+		   edit_url: "/admin/products/edit/id/",
+		   colNames:['№','Название', 'Модель',
+			  		   		  "Адрес в браузере", "Цена", "Позиция", "Показывать на главной", "Показывать"],
+		   colModel :[	{name: 'id', width: "10px", index: true}, 
+			   		   	{name: 'name', celledit: true, width: "80px", filter: 'name'},
+			   		   	{name: 'model',  celledit: true, width: "100px", filter: 'name'},	   			
+			   			{name: 'url', celledit: true, width: "30px"},
+			   			{name: 'price', celledit: true, width: "20px", filter:'range'},
+			   			{name: 'position', celledit: true, width: "30px"},
+                        {name: 'show_mainpage', celledit: true, width: "30px", type: 'checkbox'},
+                        {name: 'status', celledit: true, width: "30px", type: 'checkbox'}
+                        
+   		   ],
+   		   fulledit: false,
+   		   inlineedit: true,
+      	   filters: true,
+   		   sortdir: 'asc',
+   		   sortcol: 'name',      	  
+   		   rows: 10
+	  });
+});
+</script>
+
+<div id = "page-content-wrapper">  
+    <div class="inner-page-title">
+        <h3>Управление товарами</h3>
+    </div>
+    <div class = "column-content-box">
+        <div class= "content-box">
+            <div class="other">
+                <div id = "status" class="float-left"></div>
+                <div class="button float-right">
+                   <a class="btn ui-state-default ui-corner-all" 
+                    href="<?php echo $this->linkTo()?>products/edit">
+                    <span class="ui-icon ui-icon-circle-plus"></span>
+                    Добавить товар
+                    </a>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        
+            <div class = 'grid-block'>
+                <div class = "simplegridy hastable"></div>      
+                <div class="clearfix"></div>          
+            </div>  
+        </div>                 
+    </div>       
+    <div class="clearfix"></div>   
+</div>
+<div id="confirm" class="delete-block"  title="Удалить товар">
+    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+        Вы собираетесь удалить товар. Вы уверены?</p>
+</div>

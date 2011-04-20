@@ -1,0 +1,45 @@
+<script type="text/javascript" src="<?php echo $this->LinkTo ();?>scripts/grid/jquery.simplegrid.js" ></script>
+<script type='text/javascript'>
+    $(document).ready(function(){
+        $(".simplegridy").simplegrid({
+            url:'/admin/manufacturer/index/',
+            save_url: "/admin/manufacturer/inlinesave/",
+            delete_url: "/admin/manufacturer/delete/id/",
+                colNames:['№','Производитель'],
+                colModel :[    {name: 'id', width: "30px",  index: true}, 
+                {name: 'name', celledit: true, width: "30", required: true, filter:"name"},
+            ],
+            fulledit: false,
+            inlineedit: true,
+            filters: true,
+            sortdir: 'asc',
+            sortcol: 'id',            
+            rows: 10,
+            inline_add: true    
+        });
+    });
+</script>
+
+
+<div id = "page-content-wrapper">  
+    <div class="inner-page-title">
+        <h3>Управление производителями</h3>
+    </div>
+    <div class = "column-content-box">
+        <div class= "content-box">
+            <div class="other">
+                <div id = "status" class="float-left"></div>
+                <div class="button float-right">
+
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class = 'grid-block'>
+                <div class = "simplegridy hastable"></div>      
+                <div class="clearfix"></div>          
+            </div>  
+        </div>                 
+    </div>       
+    <div class="clearfix"></div>   
+</div>

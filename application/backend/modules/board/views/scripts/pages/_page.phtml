@@ -1,0 +1,24 @@
+<div class = 'edit-block portlet ui-widget ui-widget-content ui-helper-clearfix ui-corner-all form-container'>
+	<form enctype="multipart/form-data" 
+			action = "<?= $this->linkTo()?>pages/ajaxsubmit/"
+			 method="post" name="order" id="order" class ="commonform form">
+	<div class = "portlet-content">
+	<dl>
+		<div  class = 'general_info fields' id = "ttab1">
+			<?php
+				echo $this->element->name;
+                echo $this->element->url;   
+				echo $this->element->text;
+                echo $this->element->title;    
+				echo $this->element->description;
+				echo $this->element->keywords; 
+				echo $this->element->active;		
+			?>
+		</div>	
+		<div class = 'cleearfix'></div>
+	</dl>
+	</div>
+	<div class = 'cleearfix'></div>
+	<?php echo $this->element->id; ?> 
+	</form>
+</div>

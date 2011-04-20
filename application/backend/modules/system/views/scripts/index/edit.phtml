@@ -1,0 +1,173 @@
+<script>
+	$(document).ready(function() {
+		$('a.module-link').click(function () {
+			
+			$(this).parent().css({'display' : 'block'});
+			
+			var $list = $(this).parent().parent();
+			var display = $('.resourses-list', $list).css('display');
+			if (display == 'none')
+			{
+				$('.resourses-list', $list).css({'display' : 'block'});
+			}
+			else
+			{
+				$('.resourses-list', $list).css({'display' : 'none'});
+			}
+				
+		});
+
+		$('.resourses-check').click( function () {
+			var $list = $(this).parent();
+			var selected = ($('input', $list).attr('checked'));
+
+			$('ul li', $list).each(function (){
+				if (selected == false)
+				{
+					$('input', this).removeAttr('checked');
+				}
+				else if (selected == true)
+				{
+				 	$('input', this).attr({'checked':'checked'});
+				}
+			});	
+		});
+
+		$('.input-submit').click( function () {
+			$('#role-add').append($('.modules-list'));
+			$('#role-add').submit();
+		});
+	});	
+</script>
+
+<?php
+	$model = $this->service->getObject(); 
+	if ($model->getError())
+	{
+		echo '<span class="error">' 
+			. $model->getError() . '</span>';	
+	}
+	else
+	{
+?>
+<h1><?php echo $this->translation('edit_role')?> "<?php echo $model->role_name?>"</h1>
+<?php 
+
+	if ($this->service->getError())
+	{
+		echo '<span class="error">' 
+			. $this->service->getError() . '</span>';	
+	}
+	
+
+
+	$form = $this->service->getValidator();
+
+	$modulesHtml = '';
+	if (!empty($this->acl))
+	{
+		if (!empty($this->post['default_module']))
+		{
+			$defMod = $this->post['default_module'];
+		}
+		else
+		{
+			$this->post = $model->getRules();
+			$defMod = $this->post['default_module'];
+		}
+		
+		$modulesHtml .= '<div class="modules-list">';
+		foreach ($this->acl as $mid => $module)
+		{
+			$selected = '';
+			if ($mid == $defMod)
+			{
+				$selected = 'checked="checked"';	
+			}
+			else if ($defMod == 0)
+			{
+				$defMod = -1;
+				$selected = 'checked="checked"';
+			}
+			
+			
+			$modulesHtml .= '<div class="module-div">';
+			$modulesHtml .= '<h3 class="module">' . $this->translation('default') . ' 
+				<input class="resourses-radio" ' . $selected . ' type="radio" value="' . $mid . '" name="default_module">
+			   	' . $this->translation('module') . ' <a class="module-link">' . $module['module_name'] . '</a></h3>';
+			
+			if (!empty($module['resourses']))
+			{
+				$rclass = 'disabled'; 
+				$active_res = array();
+				if (!empty($this->post['resourses']))
+				{
+					foreach ($this->post['resourses'] as $key => $r)
+					{	
+						if (array_key_exists($key, $module['resourses']))
+						{
+							$rclass = '';
+							$active_res[] = $key;	
+						}
+					}
+				}
+				
+				$modulesHtml .= '<ul class="resourses-list ' . $rclass . '">';
+				foreach ($module['resourses'] as $rid => $resourses)
+				{	
+					$checked = '';
+					if (!empty($active_res) && in_array($rid, $active_res))
+					{
+						$checked = 'checked="checked"';	
+					}
+					
+					$modulesHtml .= '<li class="res-title">' . $this->translation('resource')
+                                        . ' ' . $resourses['resourse_name'] 
+						. '<input type="checkbox" class="resourses-check"
+							name = "resourses[' . $rid . ']" ' . $checked . '>';
+						
+					if (!empty($resourses['actions']))
+					{	
+						$modulesHtml .= '<ul>';
+						foreach ($resourses['actions'] as $aid => $action)
+						{
+							$aclass = '';
+							if (!empty($this->post['actions'] ))
+							{
+								foreach ($this->post['actions'] as $actions)
+								{	
+									foreach ($actions as $key => $a)
+									{
+										if ($key  === $aid)
+										{
+											$aclass = 'checked="checked"';
+										}
+									}
+								}
+							}
+						
+							$modulesHtml .= '<li>' . $this->translation('action') . ': '
+									. $this->translation($action['right_name'])
+								. '<input type="checkbox" class="action-check"
+									name = "actions[' . $rid . '][' . $aid . ']"
+									' . $aclass . ' >
+								</li>';		
+						}
+						$modulesHtml .= '</ul>';
+					}
+				}
+				$modulesHtml .= '</li></ul>';
+			}
+			
+			$modulesHtml .= '</div>';
+		}
+		$modulesHtml .= '</div>
+			<input type="submit" value="' . $this->translation('save') . '" class="input-submit">';
+	}
+	echo $form;
+	echo $modulesHtml;
+?>
+
+<?php
+	} 
+?>

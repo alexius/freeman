@@ -1,0 +1,13 @@
+	<?php 
+	    $form = $this->service->getAvatarForm();
+	    $form->setAction($this->domainLink() . 'settings/loadavatar');
+	?>
+	<div class="avatar-form">
+		<fieldset>
+			<legend><?php echo $this->translation('edit_photo') ?></legend>
+	           <div class="avatar">
+					<img src="<?php echo $this->domainLink() ?>settings/getavatar">           
+		       </div>
+	   		   <?php echo $form; ?>
+		</fieldset>
+	</div>

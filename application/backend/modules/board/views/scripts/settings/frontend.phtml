@@ -1,0 +1,46 @@
+<script type="text/javascript" src="<?php echo $this->LinkTo ();?>scripts/grid/jquery.simplegrid.js" ></script>
+<script type='text/javascript'>
+$(document).ready(function(){
+     $(".simplegridy").simplegrid({
+        url: '/admin/settings/frontend/',
+        save_url: "/admin/settings/inlinesave/",
+        edit_url: "/admin/settings/edit/id/",           
+        colNames:['№', 'Описание параметра', 'Включен'],
+        colModel :[    
+            {name: 'id',  width: "38px", index: true}, 
+            {name: 'param_description', filter:'name', celledit: true,  width: "100px"},
+            {name: 'active', celledit: true, width: "30px", type: 'checkbox'},  
+              ],
+        fulledit: false,
+        inlineedit: true,
+        filters: true,
+        sortdir: 'desc',
+        sortcol: 'id',            
+        rows: 10
+     });
+});
+</script>
+
+  
+<div id = "page-content-wrapper">  
+    <div class="inner-page-title">
+        <h3>Настройки клиентсвой части</h3>
+    </div>
+    <div class = "column-content-box">
+        <div class= "content-box">
+            <div class="other">
+                <div id = "status" class="float-left"></div>
+                <div class="button float-right">
+
+                </div>
+                <div class="clearfix"></div>
+            </div>
+             <div class="clearfix"></div> 
+            <div class = 'grid-block'>
+                <div class = "simplegridy hastable"></div>      
+                <div class="clearfix"></div>          
+            </div>  
+        </div>                 
+    </div>       
+    <div class="clearfix"></div>   
+</div>

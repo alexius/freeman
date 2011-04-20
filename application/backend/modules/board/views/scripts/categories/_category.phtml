@@ -1,0 +1,71 @@
+<div class = 'edit-block portlet ui-widget ui-widget-content ui-helper-clearfix ui-corner-all form-container'>
+	<form enctype="multipart/form-data" 
+			action = "<?= $this->linkTo()?>categories/ajaxsubmit/"
+			 method="post" name="order" id="order" class ="commonform form">
+	<div class = "portlet-content">
+		<dl>
+            <li>
+                <div class = 'tabs'>
+			        <div class="savedata">
+				        <a class="btn ui-state-default ui-corner-all binded-href" id="savestay">
+					        <span class="ui-icon ui-icon-circle-check "></span>
+					        Сохранить
+				        </a>
+				        <?php if ($this->element->id->getValue()) {?>
+					        <a class="btn ui-state-default ui-corner-all binded-href" id="delete">
+						        <span class="ui-icon ui-icon-circle-close"></span>
+						        Удалить
+					        </a>
+				        <?php } ?>
+			        </div>
+		        </div>
+		    </li>
+
+				<?php
+					echo $this->element->name;
+					echo $this->element->desc; 
+					echo $this->element->url;
+					echo $this->element->active;
+					if (isset($this->element->image))
+						$image = $this->element->image->getValue();
+					if (isset($image)) $link = '/upload/images/' . $image;
+				?>
+				<?php if (isset($this->element->image_loader)) { ?>
+				<li id="image_loader-label">
+					<label class="desc optional" for="image_loader">Изображение</label>
+				</li>				
+				<dd>
+					<?php if (isset($image)) { ?>
+					<a id = "image-preview-small"> 
+	 					<img  width = 25 height = 25 src ="<?= $link?>">
+	 				</a>
+	 				<?php } ?>
+	 				<input style = "margin-left:5px;" type="file" class="texty" id="image_loader" name="image_loader"/>
+	 				<input value = "1" type="hidden" id="image_loader" name="image_loader"/>
+				</dd>
+					<?php if (isset($image)) { ?>
+	 				<dt></dt>
+	 				<dd>
+	 					<input style = "margin-left:5px;" type="checkbox" value = 1
+	 						class="cheky" id="image_del" name="del_image"/>
+	 					<label id="image_del_label" style = "width:185px; margin:0px 0px 5px 5px;">
+	 						Удалить изображение
+	 					</label>
+	 				</dd>
+	 				<?php } ?>
+	 			<?php } ?>
+           <div style = 'clear:both;'></div>
+				<?php
+					echo $this->element->meta_title;
+					echo $this->element->meta_keywords;
+					echo $this->element->meta_desc; 
+				?>
+
+			<div style = 'clear:both;'></div>
+		</dl>
+	</div>
+	<?php echo $this->element->id; ?> 
+	<?php echo $this->element->parent_id; ?>
+	<?php if (isset($image)) echo $this->element->image; ?>
+	</form>
+</div>

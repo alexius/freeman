@@ -1,0 +1,19 @@
+<div class="block-blue-clear">
+</div>  
+<div class="block-top">
+<h3 class = "title-page">Произошла ошибка</h3>
+  <div>
+      <b><?= $this->title ?></b>
+      <div>
+          <?= $this->message ?>
+      </div>
+  </div>
+
+  <? if ('development' == APPLICATION_ENV): ?>
+
+  <h3>Exception information:</h3>
+  <p>
+      <b>Message:</b> <?= $this->exception->getMessage() ?>
+  </p>
+  <? endif ?>
+</div> 

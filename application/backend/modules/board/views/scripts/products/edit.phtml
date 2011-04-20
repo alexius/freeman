@@ -1,0 +1,197 @@
+<?php $host = $this->LinkTo (); 
+    $this->headScript()
+
+    ->appendFile($host . "scripts/swfupload/swfupload.js")
+    ->appendFile($host . "scripts/swfupload/swfupload.queue.js")    
+    ->appendFile($host . "scripts/swfupload/swfupload.cookies.js") 
+    ->appendFile($host . "scripts/handlers.js");  
+?>
+
+
+
+<script type="text/javascript" src="<?php echo $host;?>scripts/jqueryFileTree/productCategories.js" ></script>
+<script type="text/javascript" src="<?php echo $host;?>scripts/productAjax.js" ></script>
+<script type="text/javascript" src="<?php echo $host;?>scripts/jquery.form.js" ></script>
+
+<link rel="stylesheet" type="text/css" media="screen"  href="<?php echo $host;?>styles/jqueryFileTree.css" ></link>
+<link href="<?php echo $host?>styles/ui/ui.datepicker.css" rel="stylesheet" media="all" />
+<script type="text/javascript" src="<?php echo $host?>scripts/ui.datepicker.js"></script>
+
+<?php 
+    $name = $this->form->name->getValue();
+    $title = $name ? 'Редактирование товара "' . $name . '"' 
+    :'Добавление нового товара';
+    $id = $this->form->id->getValue() ? $this->form->id->getValue() : 0;
+?>
+<script>
+    var base_url = "<?php echo $host?>";
+    var cur_url = base_url + "products/edit/id/";
+    var url = base_url + "products/getform/";
+    var url_cont = base_url + "products/submitredirect/";
+    var url_redirect = base_url + "products/index/";
+    var del_url = base_url + "products/delete/id/";
+    var resort_url = base_url + 'products/resortiamges/';
+    var gallery_url = base_url + 'products/getimages/';
+    var gupload_url = base_url + 'products/uploadimages/';
+
+
+    $(document).ready( function() {   
+        var swfu;  
+        initSwfUpload(base_url);    
+
+        var message = 'Вы уверены, что хотите удалить данный товар ?';
+        var path =  '<?php echo $this->path ?>';
+        var pid = <?php echo $id?>;
+
+        var anchorValue;
+        var urla = document.location;
+        var strippedUrl = urla.toString().split("#");
+        if(strippedUrl.length > 1){
+            anchorvalue = strippedUrl[1];
+            tid = 'tab' + anchorvalue;
+            tabClick(tid, pid);
+            $('#' + tid).addClass('active');
+        } else {
+            $('#tab1').addClass('active');
+        }
+
+        $('.click-tabs').click(
+        function () {
+            $('.click-tabs').removeClass('active');
+            var tid = $(this).attr('id');
+            tabClick(tid, pid);
+            $(this).addClass('active');
+        }
+        );
+        initFormEvents(url_cont, url_redirect, del_url, message, cur_url);
+
+        initMarkItUp(); 
+            $('#model').keyup(function(e){
+        trans(this);
+    });
+    
+    function trans(obj)
+    {
+        $('#model').transliterate({direction: 'c2l', translitareteTo:true, 
+            translitareteToField: '#url'});
+        $('#url').val($('#url').val().split(' ').join('').toLowerCase());                
+    }  
+    
+    $('#date_add').datepicker({ dateFormat: 'yy-mm-dd',
+           onSelect: function(dateText, inst) {
+           $('#date_add').val(dateText);
+           }         
+    });
+        //    $('#short_desc').markItUp(mySettings);   
+        
+          $("#images-list").sortable();
+           $("#images-list").disableSelection();
+                                          
+
+    });
+</script>  
+
+<div id = "page-content-wrapper">  
+    <div class="inner-page-title">
+        <h3><?php echo $title?></h3>
+    </div>
+    <div class = "column-content-box">
+        <div class= "content-box">
+            <div class="other">   
+                <div id = "status" class="float-left"></div>             
+                <div class="button">
+                    <a href = "<?php echo $host?>products/index" class="btn ui-state-default ui-corner-all"  Назад>
+                        <span class="ui-icon ui-icon-circle-triangle-w"></span>
+                        Назад
+                    </a>
+                    <a class="btn ui-state-default ui-corner-all binded-href" id="save">
+                        <span class="ui-icon ui-icon-circle-check"></span>
+                        Сохранить
+                    </a>
+                    <a class="btn ui-state-default ui-corner-all binded-href" id="savestay">
+                        <span class="ui-icon ui-icon-circle-check"></span>
+                        Сохранить и продолжить
+                    </a>
+                    <?php if (!empty($name)) { ?>
+                        <!--     <a class="btn ui-state-default ui-corner-all binded-href" id="dublicate" >
+                        <span class="ui-icon ui-icon-copy"></span>
+                        Дублировать
+                        </a>
+                        -->
+                        <a class="btn ui-state-default ui-corner-all binded-href" id="delete">
+                            <span class="ui-icon ui-icon-circle-close"></span>
+                            Удалить
+                        </a>
+                        <?php } ?>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="clearfix"></div>
+            <div class = "menu-tabs">
+                <div class="portlet ui-widget ui-widget-content ui-helper-clearfix ui-corner-all">
+                    <div class="portlet-header ui-widget-header">Закладки</div>
+                    <div class="portlet-content">
+                        <ul class="side-menu" id="style-switcher">
+                            <li>
+                                <a href = "#1"  class = "click-tabs" id = "tab1">
+                                    Основная информация</a>
+                            </li>
+                            <li>
+                                <a href = "#2" class = "click-tabs" id = "tab2">
+                                    Описание</a>
+                            </li>
+                            <li>
+                                <a href = "#3" class = "click-tabs" id = "tab3">
+                                    МЕТА Описание</a>
+                            </li>
+                            <li>
+                                <a href = "#4" class = "click-tabs" id = "tab4">
+                                    Изображения</a>
+                            </li>
+                            <li>
+                                <a href = "#5" class = "click-tabs" id = "tab5">
+                                    Категории</a>
+                            </li>                              
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div id = "ttab4" class = 'images fields' style ="float:left; display:none; text-align:left; width:715px;">
+                <div id = 'images' style ="text-align:left;">
+                    <div id="divSWFUploadUI" style="margin-top: 20px;">
+                         <p>
+                            <span id="upload_image"></span>    
+                           <br />
+                        </p>
+                        <div class="fieldset  flash" id="fsUploadProgress">
+                            <span class="legend">Очередь загрузки</span>
+                        </div>
+                         <div id="divFileProgressContainer" style="height: 75px;"></div>         
+                        
+                         
+                    </div>
+                </div>
+                  <div class = "clear"></div>       
+                <div id="thumbnails"><ul id ="images-list"> <?php echo $this->images?></ul></div>
+              
+                <div id="divLoadingContent"></div>
+                <div id="divLongLoading"></div>
+                <div id="divAlternateContent"></div>
+
+            </div> 
+            <div class = "category-tree fields product-cats" id = "ttab5"></div>    
+            <div class = 'edit-form'><?php echo $this->form; ?></div> 
+            <div class = "clear"></div>     
+        </div>                 
+    </div>       
+    <div class="clearfix"></div>   
+</div>
+
+
+
+<div id="confirm" title="Удалить товар">
+    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+        Вы собираетесь удалить товар. Вы уверены?</p>
+</div>
+
+ <div id="imgs"></div>  

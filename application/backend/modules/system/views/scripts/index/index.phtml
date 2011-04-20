@@ -1,0 +1,46 @@
+<?php
+	$acl = Zend_Registry::get('fullAcl'); 
+	$normalizedAcl = Core_Controller_Plugin_AclNormalizer::normalizeByRole($acl);
+
+	$user = Core_Model_User::getInstance();
+	
+	echo '<h1>' . $this->translation('current_roles') . '</h1>';
+	if (!empty($normalizedAcl))
+	{
+		echo '<ul>';
+		foreach ($normalizedAcl as $role => $module)
+		{
+			if (!empty($module) && $module['editable'] == 1)
+			{
+				echo '<li>' . $this->translation('role') . ': ' . $module['role_name'];
+				echo ' <a href="' . $this->domainLink() . 'index/edit/id/'
+					. $module['role_id'] . '">' . $this->translation('redact') . '</a>';
+				echo '<ul>';
+				foreach ($module['modules'] as $resourses)
+				{
+					echo '<li>'.$this->translation('module').' ' . $this->translation($resourses['module_name']);
+						if (!empty($resourses))
+						{
+							echo '<ul>';
+							foreach ($resourses['resourses'] as $action)
+							{
+								if (!empty($action))
+								{
+									foreach ($action as $val)
+									{ 	
+										echo '<li>' . $this->translation('action') . ': '
+                                                . $this->translation($val['name']) . '</li>';
+									}
+								}
+									
+							}
+							echo '</ul>';
+						}
+					echo '</li>';	
+				}
+				echo '</ul></li>';
+			}	
+		}
+		echo '</ul>';
+	}
+?>

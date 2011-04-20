@@ -1,0 +1,106 @@
+<?php $host = $this->linkTo();?>
+<script type="text/javascript" src="<?php echo $host?>scripts/jquery.form.js" ></script>
+<script type="text/javascript" src="<?php echo $host?>scripts/pagesFunctions.js" ></script>
+
+
+<link href="<?php echo $host?>styles/ui/ui.datepicker.css" rel="stylesheet" media="all" />
+<script type="text/javascript" src="<?php echo $host?>scripts/ui.datepicker.js"></script>
+
+<script>      
+$(document).ready( function() {
+	var base_url = "<?php echo  $host?>";
+	var url = base_url + "news/getform/";
+	var back_url = base_url + "news/";
+	var url_cont = base_url + "news/ajaxsubmit/";
+	var url_redirect = base_url + "news/";
+	var del_url = base_url + "news/delete/";
+
+    initFormEvents(url_cont, url_redirect, del_url);
+
+
+    $('#name').keyup(function(e){
+        trans(this);
+    });
+    
+    function trans(obj)
+    {
+        $('#name').transliterate({direction: 'c2l', translitareteTo:true, 
+            translitareteToField: '#url'});
+        $('#url').val($('#url').val().split(' ').join('').toLowerCase());                
+    }
+        
+    $('#date_add').datepicker({ dateFormat: 'yy-mm-dd',
+           onSelect: function(dateText, inst) {
+           $('#date_add').val(dateText);
+            }         
+    });
+     
+});
+</script>
+<?php
+if (isset($this->id) && $this->id > 0){
+	$page = $this->service->getMapper()->fetchId($this->id);
+	$title = 'Новость "' . $page->name . "'";
+	
+	$form = $this->service->getForm();
+
+	$form->populate($page->toArray());
+}
+else {
+	$form = $this->service->getForm();
+	$title = 'Добавление новой новости';
+}
+if (isset($this->message)){
+	echo '<h2>' . $this->message . '</h2>';
+}
+?>
+
+
+
+<div id = "page-content-wrapper">  
+    <div class="inner-page-title">
+        <h3><?php echo $title?></h3>
+    </div>
+    <div class = "column-content-box">
+        <div class= "content-box">
+            <div class="other">
+              
+                <div class="button float-right">
+                    <a href = "<?= $this->linkTo()?>news/index/" class="btn ui-state-default ui-corner-all">
+                        <span class="ui-icon ui-icon-circle-triangle-w"></span>
+                        Назад
+                    </a>
+                    <a class="btn ui-state-default ui-corner-all binded-href"  id="save">
+                        <span class="ui-icon ui-icon-circle-check"></span>
+                        Сохранить
+                    </a>
+                    <a class="btn ui-state-default ui-corner-all binded-href" id="savestay">
+                        <span class="ui-icon ui-icon-circle-check"></span>
+                        Сохранить и продолжить
+                    </a>
+                    <?php if (isset($this->id)) {?>
+                    <a class="btn ui-state-default ui-corner-all binded-href" id="delete">
+                        <span class="ui-icon ui-icon-circle-close"></span>
+                        Удалить
+                    </a>
+                    <?php } ?>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class = 'edit-form'>
+                <?php echo $form ?>
+                
+                   
+            </div>
+            <div id = "status" class="float-left"></div>       
+            <div class = "clear"></div>     
+        </div>                 
+    </div>       
+    <div class="clearfix"></div>   
+</div>
+
+<div id="confirm" title="Удалить новосит">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+	 Вы уверены, что хотите удалть новость?</p>
+</div>
+<div id="imgs"></div>  
