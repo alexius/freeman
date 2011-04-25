@@ -1,0 +1,48 @@
+<?php
+    $host =  $this->domainLink (1);
+    $this->headScript()
+			->appendFile($host . "js/jquery.simplegrid.js")
+?>
+
+<script type='text/javascript'>
+$(document).ready(function(){
+     $(".simplegridy").simplegrid({
+        url: '/admin/index/index',
+        save_url: "/admin/index/inlinesave",
+        edit_url: "/admin/index/edit/id/",
+        delete_url: "/admin/index/delete/id/",
+        colNames:['№','Название', 'Адрес Страници', 'Включен'],
+        colModel :[    
+            {name: 'id', filter: 'range', width: "38px", index: true}, 
+            {name: 'name', celledit: true, filter: 'name', width: "100px"},
+            {name: 'url', celledit: true, filter: 'name', width: "100px"},
+            {name: 'active', celledit: true, filter: 'option', width: "30px", type: 'checkbox'}
+        ],
+        fulledit: false,
+        inlineedit: true,
+        filters: true,
+        sortdir: 'asc',
+        sortcol: 'id',            
+        rows: 10
+     });
+});
+</script>
+
+
+<div class="padding-left buttons-left">
+	<div>
+		<?php echo $this->buttonLink(
+			$host . 'index/edit/',
+			$this->translation('add_page'), '',
+			'add-translation');
+		?>
+	</div>
+</div>
+
+         <div class="clear"></div>
+        <div class = 'grid-block'>
+            <div class = "simplegridy hastable"></div>
+            <div class="clearfix"></div>
+        </div>
+
+

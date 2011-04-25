@@ -51,7 +51,7 @@ class Core_Controller_ErrorController extends Core_Controller_Start
 	
 	public function init()
 	{
-		//$this->_helper->layout->setLayout('clear');
+		$this->_helper->layout->setLayout('main');
 	}
 	
     public function errorAction() 

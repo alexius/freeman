@@ -38,7 +38,7 @@ class Core_Controller_Start extends Zend_Controller_Action
 	/**
 	 * if true
 	 * Enables returning html response to ajax request
-	 * and disables service respinse
+	 * and disables service response
 	 * @var bool
 	 */
 	protected $_ajaxViewEnabled = false;

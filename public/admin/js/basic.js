@@ -125,6 +125,38 @@ function errorMessage(text){
 
 }
 
+function notification(type, message, display)
+{
+    var styleClass = '';
+    if (type == 'error') {
+        styleClass = 'notification error png_bg';
+    }
+    else if (type == 'success') {
+        styleClass = 'notification success png_bg';
+    }
+    else if (type == 'information') {
+        styleClass = 'notification information png_bg';
+    }
+    else if (type == 'attention') {
+        styleClass = 'notification attention png_bg';
+    }
+
+    if (display === false){
+        var display = 'no-display';
+    } else {
+        var display = '';
+    }
+
+
+    var template = '<div class="' + styleClass + ' ' + display + '">'
+                + '<a href="#" class="close">' +
+                    '<img src="/admin/images/icons/cross_grey_small.png" title="" alt="">'
+                + '</a>'
+                + '<div class="notification-message">' + message + '</div>'
+                + '</div>';
+    return template;
+}
+
 function hideMenu()
 {
     var options = {};
