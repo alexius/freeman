@@ -48,3 +48,6 @@ include_once 'Zend/Validate/File/Size.php';
 include_once 'Zend/Validate/File/Count.php';
 include_once 'Zend/Validate/File/MimeType.php';
 include_once 'Zend/Form/Decorator/File.php';
+include_once 'Zend/Validate/EmailAddress.php';
+include_once 'Core/Validate/UniqueOther.php';
+include_once 'Zend/View/Helper/FormFile.php';

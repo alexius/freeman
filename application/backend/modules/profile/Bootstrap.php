@@ -21,9 +21,9 @@ class Profile_Bootstrap extends Zend_Application_Module_Bootstrap
 		    realpath(APPLICATION_PATH . '/modules/' . $this->_moduleName . '/mapper'),
 		    get_include_path(),
 		)));
-		
+
 		defined('APPLICATION_PUB')
-    		|| define('APPLICATION_PUB', BASE_PATH . '/../application' . '/modules/' . $this->_moduleName);
+    		|| define('APPLICATION_PUB', BASE_PATH . '/../../application/backend' . '/modules/' . $this->_moduleName);
     }
     
 	/**

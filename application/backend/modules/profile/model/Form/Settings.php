@@ -15,6 +15,7 @@ class Form_Settings extends Core_Form
 		$this->addElement ('text', 'name', array (
             'label' => Zend_Registry::get('translation')->get('user_name'),
 			'required' => true,
+            'class' => 'medium-input text-input',
             'filters' => array ('StringTrim','StripTags' ),
             'validators' => array (
                 array ('StringLength', false, array (3, 55 ) ),
@@ -26,6 +27,7 @@ class Form_Settings extends Core_Form
 		$this->addElement ('text', 'surname', array (
             'label' => Zend_Registry::get('translation')->get('surname'),
 			'required' => true,
+            'class' => 'medium-input text-input',
             'filters' => array ('StringTrim','StripTags' ),
             'validators' => array (
                 array ('StringLength', false, array (3, 55 ) ),
@@ -36,6 +38,7 @@ class Form_Settings extends Core_Form
 		$this->addElement ('text', 'patronymic', array (
             'label' => Zend_Registry::get('translation')->get('patronymic'),
 			'required' => true,
+            'class' => 'medium-input text-input',
             'filters' => array ('StringTrim','StripTags' ),
             'validators' => array (
                 array ('StringLength', false, array (3, 55 ) ),
@@ -47,6 +50,7 @@ class Form_Settings extends Core_Form
         $this->addElement ('text', 'email', array (
             'label' => Zend_Registry::get('translation')->get('email'),
 			'required' => true,
+            'class' => 'medium-input text-input',
             'filters' => array ('StringTrim','StripTags' ),
             'validators' => array ( 'EmailAddress',
         		array('UniqueOther', false,
@@ -55,30 +59,10 @@ class Form_Settings extends Core_Form
             )
         ));
 
-
-        $this->addElement ('text', 'telephones', array (
-            'label' => Zend_Registry::get('translation')->get('contact_phones'),
-            'required' => true,
-            'filters' => array ('StringTrim','StripTags' ),
-            'validators' => array (
-		        array ('regex', true,
-				   	array(
-		            	'pattern'=> '/^[0-9\s\-\(\)]+$/i',
-		                'messages'=>array(
-		                	'regexNotMatch'=>Zend_Registry::get('translation')->get('fomat_phone_numbers') . '
-		                		(044)55555555
-		                		 09712343123
-		                	 	097-542-54-34'
-		            	)
-		           )
-		        ),
-                array ('StringLength', false, array (1, 100 ) ),
-            )
-        ));
-		
 		$this->addElement ('select', 'language', array (
             'label' => Zend_Registry::get('translation')->get('language_selection'),
 			'required' => true,
+            'class' => 'medium-input text-input',
 			'multioptions' => array('ua' => 'українська', 'ru' => 'русский', 'en' => 'english'),
             'filters' => array ('StringTrim','StripTags' ),
             'validators' => array (
