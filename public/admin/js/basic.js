@@ -13,7 +13,6 @@ $(document).ready(function() {
        $('.menu-scroll').css('margin-top',marginTop + 'px');
    });*/
 
-
     $( "#hide" ).click(function() {
         hideMenu();
         $.cookie('hidden', null, {'domain' : 'freeman.in', 'path' : '/'});

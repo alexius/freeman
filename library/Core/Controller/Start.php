@@ -43,6 +43,11 @@ class Core_Controller_Start extends Zend_Controller_Action
 	 */
 	protected $_ajaxViewEnabled = false;
 
+    public function preDispatch()
+    {
+        $cookieVal = $this->getRequest()->getCookie('hidden');
+        $this->view->hidden = $cookieVal;
+    }
 
 	public function postDispatch ()
 	{
@@ -65,9 +70,6 @@ class Core_Controller_Start extends Zend_Controller_Action
 		} else {
 			throw new Exception(Core_Model_Errors::getError(100));
 		}
-
-        $cookieVal = $this->getRequest()->getCookie('hidden');
-        $this->view->hidden = $cookieVal;
 	}
 
 	/**
