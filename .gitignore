@@ -1,4 +1,4 @@
 *.log
 library/Zend/*
-.idea/*
-backend.ini
+*.idea/*
+*backend.ini
