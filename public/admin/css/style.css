@@ -10,16 +10,21 @@ body {
                 font-family: Arial, Helvetica, sans-serif;
                 color: #555;
                 font-size: 12px;
+
+    background: #f0f0f0;
                 }
 
 #body-wrapper {
+/*
                 background: url('../images/bg-radial-gradient.gif') fixed 230px top no-repeat;
-
-
+*/
                 }
 .faux {
     float: left;
     background: #f0f0f0 url('../images/bg-body.gif') top left repeat-y;
+/*
+    height: 100%;
+*/
 }
 
 .faux-hidden {
@@ -106,7 +111,6 @@ a.remove-link:hover {
 /********************************      Sidebar      ********************************/
 
 #main-content {
-
                 padding: 10px 0 0 0;
 
                 top:0px;
