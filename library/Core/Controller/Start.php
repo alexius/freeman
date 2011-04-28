@@ -35,6 +35,11 @@ class Core_Controller_Start extends Zend_Controller_Action
 	 */
 	protected $_permited = true;
 
+    /**
+     * Variable, containing ajax respons parametrs
+     * @var array
+     **/
+    protected $_ajaxResponse = array();
 	/**
 	 * if true
 	 * Enables returning html response to ajax request
@@ -99,26 +104,54 @@ class Core_Controller_Start extends Zend_Controller_Action
 		}
 
 	    if ($this->_service->getError()){
-    		$response = array(
+    		$this->_ajaxResponse = array(
     			'error_message' => $this->_service->getError(),
     			'error' => 'true'
     		);
     	} else {
-    		$response = array(
+    		$this->_ajaxResponse = array(
     			'error' => 'false',
     			'message' => $this->_service->getMessage()
     		);
     	}
 
     	if ($this->_service->getFormMessages()){
-    		$response['formMessages'] = $this->_service->getFormMessages();
+    		$this->_ajaxResponse['formMessages'] = $this->_service->getFormMessages();
     	}
 
 		if ($this->_service->getJsonData() == true){
-			$response['data'] = $this->_service->getJsonData();
+            $this->_addArrayToAjaxResponse($this->_service->getJsonData());
 		}
 
-    	$data = Zend_Json::encode($response);
+    	$data = Zend_Json::encode($this->_ajaxResponse);
     	$this->ajaxResponse($data, $type);
 	}
+
+    /**
+     * Add parametr to ajax response before encoding
+     * @param  $key
+     * @param  $value
+     * @return void
+     */
+    protected function _addToAjaxResponse($key, $value)
+    {
+        $this->_ajaxResponse[$key] = $value;
+    }
+
+    /**
+     * Add array to ajax response before encoding
+     * @param  $key
+     * @param  $value
+     * @return void
+     */
+    protected function _addArrayToAjaxResponse(array $data)
+    {
+        if (empty($data)){
+            return false;
+        }
+        foreach ($data as $key => $val)
+        {
+            $this->_ajaxResponse[$key] = $val;
+        }
+    }
 }

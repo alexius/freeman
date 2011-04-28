@@ -1,5 +1,5 @@
 <?php
-class PagesMapper extends Core_Mapper_Super
+class PagesMapper extends Core_Mapper_Ajax
 {
 	/**
 	 * DbTable Class

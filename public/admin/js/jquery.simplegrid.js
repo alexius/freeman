@@ -40,12 +40,12 @@
 		},options);
 		
         var saveButton = '<a id = "save_row" class = "binded-href btn_no_text btn ui-state-default ui-corner-all"><span class="ui-icon ui-icon-disk"></span></a>';
-        var calncelButton = '<a id = "remove_row" class = "binded-href btn_no_text btn ui-state-default ui-corner-all"><span class="ui-icon ui-icon-cancel"></span></a>';
+        var calncelButton = '<a id = "remove_row" class = "tooltip"><span class="ui-icon ui-icon-green ui-icon-wrench"></span></a>';
         var tableSelector = 'table.grid-table';
         var addTrSelector = ' tbody tr.current';
         
 		// Инициализируем табличку
-		$(this).html('<table class = "grid-table" width = "' + options.width + 
+		$(this).html('<table class = "grid-table" width = "' + options.width +
 					'" height = "' + options.height + '"></table>');	
 		
 		// заголовки
@@ -419,34 +419,47 @@
 					    
 				    }
 				    
-				    tbody += '<td width = "60px" class = "grid-actions">'; 
+				    tbody += '<td width = "60px" class = "grid-actions">';
+                    tbody += '<ul class="icons-buttons ui-widget ui-helper-clearfix">';
 				    
 				    if (options.actions_type == 'select')
                     {
-					    tbody += '<a class = "add-to-order binded-href btn_no_text btn ui-state-default ui-corner-all" rel = "' + index + '"><span class="ui-icon ui-icon-cart"></span></a> ';
+                        tbody += '<li class="icon-link ui-state-default ui-corner-all">';
+					    tbody += '<a class = "" rel = "'
+                                + index + '"><span class="ui-icon ui-icon-cart"></span></a> ';
+                        tbody += '</li>';
 				    }
 				    else if (options.actions_type == 'edit')
                     {
 					    if (options.edit_url != '')
                         {
-						    tbody += '<a class="btn_no_text btn ui-state-default ui-corner-all tooltip" href = "' + options.edit_url + 
-							    index + '"><span class="ui-icon ui-icon-wrench"></span></a> ';
+                            tbody += '<li class="icon-link ui-state-default ui-corner-all">';
+						    tbody += '<a class="tooltip" href = "' +
+                                    options.edit_url +
+							        index + '"><span class="ui-icon ui-icon-wrench"></span></a> ';
+                            tbody += '</li>';
 					    }
 			    
 					    if (options.delete_url != '')
                         {
-						    tbody += '<a rel = "' + index + '" class = "delete-link binded-href btn_no_text btn ui-state-default ui-corner-all"><span class="ui-icon ui-icon-circle-close"></span></a> ';
+                            tbody += '<li class="icon-link ui-state-default ui-corner-all">';
+						    tbody += '<a rel = "' + index +
+                                    '" class = ""><span class="ui-icon ui-icon-wrench"></span></a> ';
+                            tbody += '</li>';
 					    }
                         
                         if (options.customButtons.length > 0)
                         {
                             $.each(options.customButtons, function (i, item){
-                                tbody += '<a href = "' + item.link + index + '" "class = "binded-href btn_no_text btn ui-state-default ui-corner-all">' 
-                                    + item.html + '</a> ';
+                                tbody += '<li class="icon-link ui-state-default ui-corner-all">';
+                                tbody += '<a href = "' + item.link + index +
+                                        '" "class = "binded-href btn_no_text btn ui-state-default ui-corner-all">'
+                                   + item.html + '</a> ';
+                                 tbody += '</li>';
                             })
                         }
 					    
-					    tbody += '</td>';
+					    tbody += '</ul></td>';
 				    }
 				    
 				    tbody += '</tr>';
@@ -979,8 +992,9 @@
 						if (JSON.responseText)
                         {
 							var answer = eval("("+JSON.responseText+")");
+                            //var answer = JSON.responseText;
                              
-                            if (answer.error == undefined)
+                            if (answer.error == 'false')
                             {
 							    options.total_rows = Math.ceil(answer.total_rows / options.rows);
 							    buildTable(answer.grid_data, options.colModel);
@@ -988,7 +1002,7 @@
                             }
 						}
                         navigation();
-                        messages('information', '<span>Загрузка выполнена!</span><br>' );
+                        messages('information', '<span>' + answer.message + '</span><br>' );
 					}    
 				}
 			});			

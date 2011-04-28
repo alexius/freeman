@@ -1,5 +1,5 @@
 <?php
-class PagesService extends Core_Service_Super
+class PagesService extends Core_Service_Ajax
 {
     protected $_mapperName = 'PagesMapper';
     protected $_formName = 'Page';

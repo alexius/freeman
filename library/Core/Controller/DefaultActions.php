@@ -2,12 +2,20 @@
 
 class Core_Controller_DefaultActions extends Core_Controller_Start
 {
+     /**
+     * The service layer object, generaly used in child controllers
+     * @var Core_Service_Ajax
+     */
+	protected $_service;
+
 	public function indexAction()
 	{
-		//$filters = $this->_request->getPost();
-	///	$grid_data = $this->_service->getGridData($filters);
-		//$this->ajaxResponse($grid_data, 'text/html');
-	}	
+        if ($this->getRequest()->isXmlHttpRequest())
+        {
+            $filters = $this->_request->getPost();
+            $data = $this->_service->getGridData($filters);
+        }
+	}
     
     public function editAction()
     {

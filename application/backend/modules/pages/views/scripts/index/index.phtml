@@ -1,17 +1,23 @@
 <?php
-    $host =  $this->domainLink (1);
+    $baseHost =  $this->domainLink (1);
+    $host =  $this->domainLink ();
+
     $this->headScript()
-			->appendFile($host . "js/jquery.simplegrid.js")
+			->appendFile($baseHost . "js/jquery.simplegrid.js")
+
+
 ?>
 
 <script type='text/javascript'>
 $(document).ready(function(){
      $(".simplegridy").simplegrid({
-        url: '/admin/index/index',
-        save_url: "/admin/index/inlinesave",
-        edit_url: "/admin/index/edit/id/",
-        delete_url: "/admin/index/delete/id/",
-        colNames:['№','Название', 'Адрес Страници', 'Включен'],
+        url: '<?php echo $host ?>index/index',
+        save_url: "<?php echo $host ?>index/inlinesave",
+        edit_url: "<?php echo $host ?>index/edit/id/",
+        delete_url: "<?php echo $host ?>index/delete/id/",
+        colNames:['№',"<?php echo $this->translation('name') ?>",
+                    "<?php echo $this->translation('url')?>",
+                    "<?php echo $this->translation('enabled') ?>"],
         colModel :[    
             {name: 'id', filter: 'range', width: "38px", index: true}, 
             {name: 'name', celledit: true, filter: 'name', width: "100px"},
