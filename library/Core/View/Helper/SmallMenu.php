@@ -53,7 +53,7 @@ class Zend_View_Helper_SmallMenu {
                                 );
 						$html .= $button;
 
-						/*if (count($resourses['resourses']) > 0)
+						if (count($resourses['resourses']) > 0)
 						{
 							$html .= '<ul>';
 							foreach ($resourses['resourses'] as $controller => $action)
@@ -78,7 +78,7 @@ class Zend_View_Helper_SmallMenu {
 								}
 							}
 							$html .= '</ul>';
-						}*/
+						}
 					}
 					
 				}
