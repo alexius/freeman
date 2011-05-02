@@ -31,8 +31,7 @@ form p small {
 
 form input.text-input,
 form select,
-form textarea,
-form .wysiwyg {
+form textarea {
                 padding: 6px;
                 font-size: 13px;
                 background: #fff url('../images/bg-form-field.gif') top left repeat-x;
@@ -70,3 +69,5 @@ input[type="radio"] {
                 background: none;
 				border: 0;
                 }
+
+form .textarea-small { height: 100px;}

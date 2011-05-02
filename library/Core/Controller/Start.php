@@ -120,7 +120,10 @@ class Core_Controller_Start extends Zend_Controller_Action
     	}
 
 		if ($this->_service->getJsonData() == true){
-            $this->_addArrayToAjaxResponse($this->_service->getJsonData());
+            $data = $this->_service->getJsonData();
+            if (is_array($data)){
+                $this->_addArrayToAjaxResponse($this->_service->getJsonData());
+            }
 		}
 
     	$data = Zend_Json::encode($this->_ajaxResponse);

@@ -23,12 +23,10 @@ class Zend_View_Helper_DomainLink
 	 */
 	public function domainLink($base = null) 
 	{
+        $config = Zend_Registry::get ( 'app_config' );
 		if ($base == null)
-		{	
-		
-			$config = Zend_Registry::get ( 'app_config' ); 	
+		{
 			$configModule = Zend_Registry::get ( 'config' );
-			
 			if (self::$_httpPath === null) {
 				self::$_httpPath = $config['baseHttpPath'] 
 					. $configModule['httpPath'];
@@ -36,16 +34,17 @@ class Zend_View_Helper_DomainLink
 			
 			return self::$_httpPath;
 		}
-		else 
+		else if ($base == 1)
 		{
-			$config = (Zend_Registry::get ( 'app_config' ));
-			
 			if (self::$_baseHttpPath === null) {
 				self::$_baseHttpPath = $config['baseHttpPath'];
 			}
-			
 			return self::$_baseHttpPath;
 		}
+        else if ($base == 2)
+        {
+            return $config['textEditorPrefix'];
+        }
 	}
 }
 ?>

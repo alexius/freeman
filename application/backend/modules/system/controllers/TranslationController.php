@@ -15,24 +15,11 @@ class System_TranslationController extends Core_Controller_Start
      * @var String
      */
 	protected $_defaultServiceName = 'TranslationService';
-	
-	/**
-     * The service layer object
-     *
-     * @var RoleService
+
+    /**
+     * @var TranslationService
      */
-	protected $_service;
-
-
-    public function preDispatch()
-    {
-        if ($this->_request->getParam('system'))
-        {
-            $system = $this->_request->getParam('system');
-            $this->_service->setSystem($system);
-            $this->view->assign('system', $system);
-        }
-    }
+    protected $_service;
 
 	public function indexAction()
 	{

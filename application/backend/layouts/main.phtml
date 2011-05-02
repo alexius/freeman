@@ -7,29 +7,26 @@
 	<?php echo $this->headTitle ( 'Панель управления' );?>
 	<?php
 
-
-
-
 		$this->headScript()
+            ->prependFile($host . "js/jquery-ui-1.8.11.custom.min.js")
 			->prependFile($host . "js/jquery-1.5.2.min.js")
             ->appendFile($host . "js/tooltip.js")
 			->appendFile($host . "js/simpla.jquery.configuration.js")
 			->appendFile($host . "js/facebox.js")
 			->appendFile($host . "js/jquery.form.js")
             ->appendFile($host . "js/jquery.transliterate-min.js")
-            ->appendFile($host . "js/jquery-ui-1.8.11.custom.min.js")
             ->appendFile($host . "js/jquery.scrollfollow.js")
             ->appendFile($host . "js/basic.js")
             ->appendFile($host . "js/ajax.modal.submitter.js")
             ->appendFile($host . "js/jquery.cookie.js");
 
         $this->headLink()
-            ->appendStylesheet($host . "css/reset.css")
+            ->prependStylesheet($host . "css/reset.css")
 			->appendStylesheet($host . "css/style.css")
 			->appendStylesheet($host . "css/invalid.css")
             ->appendStylesheet($host . "css/form.css")
             ->appendStylesheet($host . "css/jquery.tooltip.css")
-            ->appendStylesheet($host . "css/south-street/jquery-ui-1.8.11.custom.css");
+            ->prependStylesheet($host . "css/south-street/jquery-ui-1.8.11.custom.css");
 	?>
 
 	<!--[if lte IE 7]>
@@ -92,66 +89,17 @@
                ?>
 			</ul>
 
-			<h1 id="sidebar-title"><a href="#">Simpla Admin</a></h1>
+			<h1 id="sidebar-title"><a href="http://105.in.ua">Social Admin</a></h1>
 		  
 			<!-- Logo (221px wide) -->
-			<a href="#"><img id="logo" src="<?php echo $host ?>images/logo.png" alt="Simpla Admin logo" /></a>
+			<a href="http://105.in.ua"><img id="logo" src="<?php echo $host ?>images/logo.png" alt="Simpla Admin logo" /></a>
 		  
 			<!-- Sidebar Profile links -->
-			<div id="profile-links">
-				Hello, <a href="#" title="Edit your profile">John Doe</a>, you have <a href="#messages" rel="modal" title="3 Messages">3 Messages</a><br />
-				<br />
-				<a href="#" title="View the Site">View the Site</a> | <a href="<?php echo $host ?>default/index/logout/" title="Sign Out">Sign Out</a>
-			</div>        
-            <?php echo $this->menu(); ?>
-			
-			<div id="messages" style="display: none"> <!-- Messages are shown when a link with these attributes are clicked: href="#messages" rel="modal"  -->
-				
-				<h3>3 Messages</h3>
-			 
-				<p>
-					<strong>17th May 2009</strong> by Admin<br />
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna. Cras in mi at felis aliquet congue.
-					<small><a href="#" class="remove-link" title="Remove message">Remove</a></small>
-				</p>
-			 
-				<p>
-					<strong>2nd May 2009</strong> by Jane Doe<br />
-					Ut a est eget ligula molestie gravida. Curabitur massa. Donec eleifend, libero at sagittis mollis, tellus est malesuada tellus, at luctus turpis elit sit amet quam. Vivamus pretium ornare est.
-					<small><a href="#" class="remove-link" title="Remove message">Remove</a></small>
-				</p>
-			 
-				<p>
-					<strong>25th April 2009</strong> by Admin<br />
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna. Cras in mi at felis aliquet congue.
-					<small><a href="#" class="remove-link" title="Remove message">Remove</a></small>
-				</p>
-				
-				<form action="" method="post">
-					
-					<h4>New Message</h4>
-					
-					<fieldset>
-						<textarea class="textarea" name="textfield" cols="79" rows="5"></textarea>
-					</fieldset>
-					
-					<fieldset>
-					
-						<select name="dropdown" class="small-input">
-							<option value="option1">Send to...</option>
-							<option value="option2">Everyone</option>
-							<option value="option3">Admin</option>
-							<option value="option4">Jane Doe</option>
-						</select>
-						
-						<input class="button" type="submit" value="Send" />
-						
-					</fieldset>
-					
-				</form>
-				
-			</div> <!-- End #messages -->
-			
+
+            <?php
+               echo $this->user();
+               echo $this->menu();
+           ?>
 		</div></div> <!-- End #sidebar -->
 		
 		<div id="main-content" class="<?php  echo $mainCont ?>"> <!-- Main Content Section with everything -->

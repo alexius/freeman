@@ -1,11 +1,17 @@
 <?php
     $baseHost =  $this->domainLink (1);
     $host =  $this->domainLink ();
+    $lang = Zend_Registry::get('language');
+    $conf  = Zend_Registry::get('app_config');
+    $prefix = $baseHost . $conf['textEditorPrefix'];
 
     $this->headScript()
 			->appendFile($baseHost . "js/jquery.simplegrid.js")
+			->appendFile($prefix . "js/elrte.min.js")
+            ->appendFile($prefix . "js/i18n/elrte." . $lang . ".js");
 
-
+   $this->headLink()
+            ->appendStylesheet($prefix . "css/elrte.min.css")
 ?>
 
 <script type='text/javascript'>
@@ -19,7 +25,7 @@ $(document).ready(function(){
                     "<?php echo $this->translation('url')?>",
                     "<?php echo $this->translation('enabled') ?>"],
         colModel :[    
-            {name: 'id', filter: 'range', width: "38px", index: true}, 
+            {name: 'id', width: "38px", index: true},
             {name: 'name', celledit: true, filter: 'name', width: "100px"},
             {name: 'url', celledit: true, filter: 'name', width: "100px"},
             {name: 'active', celledit: true, filter: 'option', width: "30px", type: 'checkbox'}
@@ -31,24 +37,45 @@ $(document).ready(function(){
         sortcol: 'id',            
         rows: 10
      });
+
+    var opts = {
+            cssClass : 'el-rte',
+            lang     : '<?php echo $lang ?>',
+            height   : 450,
+            toolbar  : 'complete'
+           // cssfiles : ['css/elrte-inner.css']
+        }
+    $('.textarea').elrte(opts);
 });
 </script>
 
-
-<div class="padding-left buttons-left">
-	<div>
-		<?php echo $this->buttonLink(
-			$host . 'index/edit/',
-			$this->translation('add_page'), '',
-			'add-translation');
-		?>
-	</div>
-</div>
-
-         <div class="clear"></div>
-        <div class = 'grid-block'>
+<div class="content-box"><!-- Start Content Box -->
+    <div class="content-box-header">
+        <h3></h3>
+        <ul class="content-box-tabs">
+            <li>
+                <a href="#tab1" class="default-tab">
+                    <?php echo $this->translation('pages_list')?>
+                </a>
+            </li> <!-- href must be unique and match the id of target div -->
+            <li>
+                <a href="#tab2">
+                    <?php echo $this->translation('add_page')?>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="content-box-content">
+        <div class = 'grid-block tab-content default-tab' id="tab1">
             <div class = "simplegridy hastable"></div>
             <div class="clearfix"></div>
         </div>
+        <div class = 'form tab-content' id="tab2">
+            <?php echo $this->service->getValidator(); ?>
+        </div>
+    </div>
+</div>
+ <div class="clear"></div>
+
 
 

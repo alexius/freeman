@@ -109,8 +109,10 @@ class TranslationService extends Core_Service_Super
 		);
 
 		if ($trans->count() > 0){
-			$this->_jsonData = $trans->generateInputs();
+			$this->_jsonData['data'] = $trans->generateInputs();
+            $this->setError(Core_Model_Messages::getMessage('mdata_get'));
 		}
+        $this->setError(Core_Model_Errors::getError('no_data'));
 	}
 
 	public function filters()

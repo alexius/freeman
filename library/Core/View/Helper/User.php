@@ -24,25 +24,25 @@ class Zend_View_Helper_User {
 		}
 		
 		$host = $this->view->domainLink(1);
-		
 		$user = Core_Model_User::getInstance();
-		$html = '<div class="user"><div>';
-		$html .= '<div class="greeting">'
-			. Zend_Registry::get('translation')->get('greeting') . ' ' 
-			. '</div>';
-		$html .= '<div class="avatar">
-				     <img src="' . $host . 'profile/settings/getavatar">'           
-	              . '</div>';
-		$html .= '<div class="user_data"><b>' . $user->getInitials() . '</b><br /><br />';
-		//$html .= 'Вы вошли как: <b>' . $user->role_name . '</b><br /><br />';
-		$html .= '<b><a href = "' . $host . 'profile/settings/index/">' .
-                Zend_Registry::get('translation')->get('settings') . '</a></b><br /><br />';
-		$html .= '<b><a href = "' . $host . 'default/index/logout/">' .
-                Zend_Registry::get('translation')->get('exit') . '</a></b>';
+        $conf = Zend_Registry::get('app_config');
+        $site =  $conf['baseSiteHttpPath'];
 
-		$html .= '</div>';
-		$html .= '</div></div>';
-		return $html;
+        $template = '<div id="profile-links">' .
+				 $this->view->translation('greeting') .
+                    ', <a href="' . $host . 'profile/settings/index/"
+                     title="' .
+                        $this->view->translation('settings') . '">' .
+                    $user->name . ' ' . $user->patronymic .
+                    '</a>
+				 <br /><br />
+				<a href="' . $site . '" target="_blank">' .
+                    $this->view->translation('view_site') . '</a> |
+				<a href="' . $host . 'default/index/logout/">' .
+                     $this->view->translation('exit') .
+                '</a></div>';
+
+		return $template;
 	}
 }
 ?>
