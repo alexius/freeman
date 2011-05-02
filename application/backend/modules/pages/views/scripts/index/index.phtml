@@ -1,17 +1,20 @@
 <?php
     $baseHost =  $this->domainLink (1);
     $host =  $this->domainLink ();
+    $editorPrefix = $this->domainLink (2);
+    $gridPrefix = $this->domainLink (3);
+
     $lang = Zend_Registry::get('language');
     $conf  = Zend_Registry::get('app_config');
-    $prefix = $baseHost . $conf['textEditorPrefix'];
+
 
     $this->headScript()
-			->appendFile($baseHost . "js/jquery.simplegrid.js")
-			->appendFile($prefix . "js/elrte.min.js")
-            ->appendFile($prefix . "js/i18n/elrte." . $lang . ".js");
+			->appendFile($gridPrefix . "jquery.simplegrid.js")
+			->appendFile($editorPrefix . "js/elrte.min.js")
+            ->appendFile($editorPrefix . "js/i18n/elrte." . $lang . ".js");
 
    $this->headLink()
-            ->appendStylesheet($prefix . "css/elrte.min.css")
+            ->appendStylesheet($editorPrefix . "css/elrte.min.css")
 ?>
 
 <script type='text/javascript'>

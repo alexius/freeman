@@ -9,7 +9,7 @@
 .rounded-7{-moz-border-radius:7px;-webkit-border-radius:7px;border-radius:7px;}
 .rounded-left-3{-moz-border-radius-topleft:3px;-webkit-border-top-left-radius:3px;-moz-border-radius-bottomleft:3px;-webkit-border-bottom-left-radius:3px;}
 .rounded-bottom-7{-moz-border-radius-bottomleft:7px;-moz-border-radius-bottomright:7px;-webkit-border-bottom-left-radius:7px;-webkit-border-bottom-right-radius:7px;border-bottom-left-radius:7px;border-bottom-right-radius:7px;}
-.ui-widget{font-size:.9em;}
+.ui-widget{}
 .ui-dialog .ui-dialog-buttonpane button{padding:.1em .6em .2em .6em;}
 .el-colorpicker{width:16px;height:16px;border:1px solid #ccc;position:relative;cursor:default;}
 .el-palette{width:182px;border:1px solid #ccc;background:#fff;padding:3px 2px 3px 3px;z-index:10000;position:absolute;top:16px;left:0;}

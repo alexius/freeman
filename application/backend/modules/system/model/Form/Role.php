@@ -31,7 +31,8 @@ class Form_Role extends Core_Form
         
         $this->addElement ('text', 'role_name', array (
             'label' => Zend_Registry::get('translation')->get('title'),
-            'required' => true,   
+            'required' => true,
+            'class' => 'text-input medium-input',
             'filters' => array ('StringTrim','StripTags' ),
             'validators' => array (
         		array('Unique', false, array('roles', 'role_name', 'role_id', $this)),
@@ -41,7 +42,8 @@ class Form_Role extends Core_Form
 
         $this->addElement ('text', 'role_code', array (
             'label' => Zend_Registry::get('translation')->get('code'),
-            'required' => true,   
+            'required' => true,
+            'class' => 'text-input medium-input',
             'filters' => array ('StringTrim','StripTags' ),
             'validators' => array (
         		array('Unique', false, array('roles', 'role_code', 'role_id', $this)),
@@ -50,6 +52,7 @@ class Form_Role extends Core_Form
         ));  
 
 		$this->addElement ('select', 'active', array (
+            'class' => 'medium-input',
 			'label' => Zend_Registry::get('translation')->get('just_activated'),
 			'multioptions' => array(0=>Zend_Registry::get('translation')->get('no'),
                                     1 =>Zend_Registry::get('translation')->get('yes')),

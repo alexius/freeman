@@ -38,7 +38,7 @@ class Zend_View_Helper_PageTitle
             if ($a['resourse_code'] == $curSys
                 && $a['action'] == $curAct)
             {
-                return '<h2>' . $this->view->translation($a['right_name']) . '</h2><hr>';
+                return $this->view->translation($a['right_name']);
             }
         }
 	}

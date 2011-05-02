@@ -40,15 +40,16 @@
 	});	
 </script>
 
-<h1><?php echo $this->translation('add_new_role') ?></h1>
-<?php 
-	if ($this->service->getError())
-	{
-		echo '<span class="error">' 
-			. $this->service->getError() . '</span>';	
-	}
+<div class="error-wrapper">
+	<?php echo $this->messenger($this->service->getError(), 0); ?>
+</div>
 
-	$form = $this->service->getValidator();
+<div class="message-wrapper">
+	<?php echo $this->messenger($this->service->getMessage(), 1); ?>
+</div>
+    
+<?php 
+    $form = $this->service->getValidator();
 
 	$modulesHtml = '';
 	if (!empty($this->acl))
@@ -82,7 +83,7 @@
 				<input class="resourses-radio" ' . $selected . ' type="radio" value="' . $mid
                                         . '" name="default_module">
 			   	' . $this->translation('module') . ' <a class="module-link">' 
-                                        . $module['module_name'] . '</a></h3>';
+                                        . $this->translation($module['module_name']) . '</a></h3>';
 			
 			if (!empty($module['resourses']))
 			{
@@ -100,7 +101,7 @@
 					}
 				}
 				
-				$modulesHtml .= '<ul class="resourses-list ' . $rclass . '">';
+				$modulesHtml .= '<ul class="list resourses-list ' . $rclass . '">';
 				foreach ($module['resourses'] as $rid => $resourses)
 				{	
 					$checked = '';
@@ -110,13 +111,13 @@
 					}
 					
 					$modulesHtml .= '<li class="res-title">' . $this->translation('resource')
-                                                . ' ' . $resourses['resourse_name'] 
+                                                . ' ' . $this->translation($resourses['resourse_name'])
 						. '<input type="checkbox" class="resourses-check"
 							name = "resourses[' . $rid . ']" ' . $checked . '>';
 						
 					if (!empty($resourses['actions']))
 					{	
-						$modulesHtml .= '<ul>';
+						$modulesHtml .= '<ul class="list">';
 						foreach ($resourses['actions'] as $aid => $action)
 						{
 							$aclass = '';

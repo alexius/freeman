@@ -43,7 +43,11 @@ class Zend_View_Helper_DomainLink
 		}
         else if ($base == 2)
         {
-            return $config['textEditorPrefix'];
+            return $config['baseHttpPath'] . $config['textEditorPrefix'];
+        }
+        else if ($base == 3)
+        {
+            return $config['baseHttpPath'] . $config['tableFridPrefix'];
         }
 	}
 }

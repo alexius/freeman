@@ -288,10 +288,8 @@ a.remove-link:hover {
                 }
 /************ Lists ************/
 
-#main-content ul,
-#main-content ol {
-                padding: 10px 0;
-                }
+ul.list { padding-left: 15px}
+ul.list li { padding: 3px 0 3px 0;}
 
 /* Unordered List */
 

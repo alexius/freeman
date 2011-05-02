@@ -38,9 +38,10 @@
             customButtons: [],
             button_add_html: '<a class="btn ui-state-default ui-corner-all binded-href" ><span class="ui-icon ui-icon-circle-plus"></span>Добавить</a>'
 		},options);
-		
-        var saveButton = '<a id = "save_row" class = "binded-href btn_no_text btn ui-state-default ui-corner-all"><span class="ui-icon ui-icon-disk"></span></a>';
-        var calncelButton = '<a id = "remove_row" class = "tooltip"><span class="ui-icon ui-icon-green ui-icon-wrench"></span></a>';
+
+        var liWrapper = '<li class="icon-link ui-state-default ui-corner-all">';
+        var saveButton = '<a id = "save_row" class = "tooltip"><span class="ui-icon ui-icon-disk"></span></a>';
+        var calncelButton = '<a id = "remove_row" class = "tooltip"><span class="ui-icon ui-icon-disk ui-icon-wrench"></span></a>';
         var tableSelector = 'table.grid-table';
         var addTrSelector = ' tbody tr.current';
         
@@ -287,7 +288,7 @@
                 var column = $(this).parent().children().index(this);
 				options.savedRow[options.colModel[column].name] = $(this).html();
 
-	        	$(this).html('<input style = "width:98%;" type="text" value="' + $(this).html() + '" />');
+	        	$(this).html('<input class="text-input" style = "width:98%;" type="text" value="' + $(this).html() + '" />');
                 $('input', this).focus();
 	        	$('input', this).keydown( function (event)
                 {	        		 
@@ -419,7 +420,7 @@
 					    
 				    }
 				    
-				    tbody += '<td width = "60px" class = "grid-actions">';
+				    tbody += '<td width = "60px" class = "grid-actions"><div>';
                     tbody += '<ul class="icons-buttons ui-widget ui-helper-clearfix">';
 				    
 				    if (options.actions_type == 'select')
@@ -459,7 +460,7 @@
                             })
                         }
 					    
-					    tbody += '</ul></td>';
+					    tbody += '<div class="clear"></div></ul></div></td>';
 				    }
 				    
 				    tbody += '</tr>';
@@ -654,7 +655,7 @@
 			$('.navigation div.pager-nav')
 				.append('<a title="Предыдущая страница" class="btn_no_text btn ui-state-default ui-corner-all prev binded-href">' +
 						'<span class="ui-icon ui-icon-circle-arrow-w"></span></a>' 
-                        + '<input class = "pager-info pagedisplay" type = "text">'
+                        + '<input class = "text-input pager-info pagedisplay" type = "text">'
 						+ '<a title="Следующая страница" class="btn_no_text btn ui-state-default ui-corner-all next binded-href">' +
 						'<span class="ui-icon ui-icon-circle-arrow-e"></span><a>'
                         + '<select name="rows" class="pagesize"><option value = "10">10 строк</option><option value = "30">30 строк</option><option value = "50">50 строк</option></select>');
@@ -748,13 +749,15 @@
         
         var addSaveButton = function ()
         {
-            $(addTrSelector + ' td.grid-actions').append(saveButton);
+            $(addTrSelector + ' td.grid-actions .icons-buttons')
+                    .append(liWrapper + saveButton + '</li>');
             $('#save_row').bind('click', collectAndSave);        
         }
  
         var addCancelRowButton = function ()
         {
-            $(addTrSelector + ' td.grid-actions').append(calncelButton);
+            $(addTrSelector + ' td.grid-actions .icons-buttons')
+                    .append(liWrapper + calncelButton + '</li>');
             $('#remove_row').click( function()
             {
                 $(addTrSelector).remove();    
@@ -1019,7 +1022,7 @@ var customfilter_price = function (cur, col_name)
 {
     var select_html = 'От: <input class = "grid-filter-range" name = "from-' +
                         col_name + '" size = "3"/> ' + 
-                            'До: <input class = "grid-filter-range" name = "to-' + 
+                            'До: <input class = "grid-filter-range" name = "to-' +
                             col_name + '" size = "3"/>';
                             
     select_html += 'Валюта: <select name = "price">';

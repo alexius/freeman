@@ -4,7 +4,7 @@
 <head>
 
 	<?php echo $this->headMeta ()->appendHttpEquiv ( 'Content-Type', 'text/html; charset=UTF-8' );?>
-	<?php echo $this->headTitle ( 'Панель управления' );?>
+	<?php echo $this->headTitle ( $this->pageTitle());?>
 	<?php
 
 		$this->headScript()
@@ -114,7 +114,7 @@
 			
 			<!-- Page Head -->
 		    <?php
-                echo $this->pageTitle();
+                echo '<h2>' . $this->pageTitle() .'</h2>';
                 echo '<div class="notifications"></div>';
                 echo $this->layout()->content;
             ?>

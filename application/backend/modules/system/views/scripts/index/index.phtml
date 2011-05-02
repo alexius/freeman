@@ -1,3 +1,21 @@
+<script>
+	$(document).ready(function() {
+		$('a.show-right').click(function () {
+
+			var $list = $(this).parent().parent();
+			var display = $('ul.rights-list', $list).css('display');
+			if (display == 'none')
+			{
+				$('ul.rights-list', $list).css({'display' : 'block'});
+			}
+			else
+			{
+				$('ul.rights-list', $list).css({'display' : 'none'});
+			}
+			return false;
+		});
+	});
+</script>
 <?php
 	$acl = Zend_Registry::get('fullAcl'); 
 	$normalizedAcl = Core_Controller_Plugin_AclNormalizer::normalizeByRole($acl);
@@ -7,21 +25,22 @@
 	echo '<h1>' . $this->translation('current_roles') . '</h1>';
 	if (!empty($normalizedAcl))
 	{
-		echo '<ul>';
+		echo '<ul class="list">';
 		foreach ($normalizedAcl as $role => $module)
 		{
 			if (!empty($module) && $module['editable'] == 1)
 			{
-				echo '<li>' . $this->translation('role') . ': ' . $module['role_name'];
-				echo ' <a href="' . $this->domainLink() . 'index/edit/id/'
-					. $module['role_id'] . '">' . $this->translation('redact') . '</a>';
-				echo '<ul>';
+				echo '<li><h3>' . $this->translation('role') . ': ' . $module['role_name'];
+				echo ' <a class="show-right">' . $this->translation('show') . '</a>';
+				echo ' <a href="/admin/index/edit/id/'
+					. $module['role_id'] . '">' . $this->translation('redact') . '</a></h3>';
+				echo '<ul class="no-display rights-list list">';
 				foreach ($module['modules'] as $resourses)
 				{
 					echo '<li>'.$this->translation('module').' ' . $this->translation($resourses['module_name']);
 						if (!empty($resourses))
 						{
-							echo '<ul>';
+							echo '<ul class="list">';
 							foreach ($resourses['resourses'] as $action)
 							{
 								if (!empty($action))
