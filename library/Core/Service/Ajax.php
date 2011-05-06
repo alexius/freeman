@@ -14,6 +14,57 @@ class Core_Service_Ajax extends Core_Service_Super
 	 */
 	protected $_jsonData = null;
 
+        /**
+     *
+     * Saves domain object to db
+     * @uses Core_Mapper_Super
+     * @param array $data
+     */
+	public function save($data)
+	{
+        if ($this->_validator == null) {
+			$this->setError(Core_Model_Errors::getError('no_validator'));
+            return false;
+		}
+
+        if (!$this->_validator->isValid($data))
+        {
+            $this->setError(Core_Model_Errors::getError(300));
+            $this->setFormMessages(
+                $this->_validator->getMessages()
+            );
+            return false;
+        }
+        
+		if (is_array($data))
+		{
+			$mname = $this->_mapper->getRowClass();
+			$model = new $mname;
+			$model->populate($data);
+		}
+
+		if (is_object($data))
+		{
+			$model = $data;
+		}
+
+
+		if ($this->_validator != null) {
+			$filtered_data = $this->_validator->getValues();
+			$model->populate($filtered_data);
+		}
+
+
+		$model = $this->_mapper->objectSave($model);
+
+		if ($this->_validator != null)
+        {
+			$this->_validator->populate($model->toArray());
+		}
+        $this->setMessage(Core_Model_Messages::getMessage(1));
+		return $model;
+	}
+    
 	public function getJsonData()
 	{
 		if ($this->_jsonData != null)

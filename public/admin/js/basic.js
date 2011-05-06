@@ -1,5 +1,12 @@
 $(document).ready(function() {
 
+    $('.top-menu .sub-wrapper').hover(
+            function(){ var subWrapper = $(this);
+                $('ul.sub-menu', subWrapper).css('display', 'block')},
+            function(){ var subWrapper = $(this);
+                $('ul.sub-menu', subWrapper).css('display', 'none');}
+    );
+
     $( '.menu-scroll' ).scrollFollow( {
         speed: 500,
         offset: 0,
@@ -52,9 +59,37 @@ $(document).ready(function() {
 		);
 
     coloriz_table();
-
+    ajaxForm();
+    addCLoseEventToMsg();
 });
 
+function ajaxForm()
+{
+    $('.ajax-forms').ajaxForm(  {
+            success:    function(responseText, q, y, forma) {
+                $(forma + ' .errors, .ajax-errors').html('');
+                var ans_json = responseText;
+                if (ans_json.error == 'true') {
+                    errorMessage(ans_json.error_message);
+                }
+                if (ans_json.formMessages){
+                    $(forma + ' .ajax-errors').remove();
+                    $.each(ans_json.formMessages, function (i, item){
+                        var err = '<ul class="ajax-errors '
+                                + ' errors-wrapper input-notification error png_bg">';
+                        $.each(item, function (erri, errText){
+                            err += '<li>' + errText + '</li>';
+                        });
+                        err += '</ul>';
+                        $('#' + i).parent().append(err);
+                    });
+                }
+                if (ans_json.message) {
+                    successMessage( ans_json.message);
+                }
+            }
+    });
+}
 function coloriz_table()
 {
 	var $table = $('.default-table');
@@ -102,26 +137,20 @@ function isInteger(s) {
 function successMessage(text){
 	$('.error-wrapper').html('');
 	$('.message-wrapper').html('');
-
-	var messageHtml = '<div class="ui-widget message">' +
-			'<div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;">' +
-			'<p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>'
-			+ text + '</p></div></div>';
-	$('.message-wrapper').html(messageHtml);
-
+    var msg = notification('success', text, 1)
+	$('.message-wrapper').html(msg);
+    $('.message-wrapper').show();
+    addCLoseEventToMsg();
 }
 
 
 function errorMessage(text){
 	$('.error-wrapper').html('');
 	$('.message-wrapper').html('');
-
-	var messageHtml = '<div class="ui-widget message">' +
-			'<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">' +
-			'<p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>'
-			+ text + '</p></div></div>';
-	$('.error-wrapper').html(messageHtml);
-
+    var msg = notification('error', text, 1)
+	$('.message-wrapper').html(msg);
+    $('.message-wrapper').show();
+    addCLoseEventToMsg();
 }
 
 function notification(type, message, display)
@@ -180,4 +209,24 @@ function showMenu()
     $( "#sidebar-wrapper" ).show(  );
 
     $('.faux-hidden').removeClass('faux-hidden').addClass('faux');
+}
+
+function addCLoseEventToMsg()
+{
+    $(".close").unbind('close');
+    $(".close").click(
+        function () {
+            $(this).parent().fadeTo(400, 0, function () { // Links with the class "close" will close parent
+                $(this).slideUp(400);
+            });
+            return false;
+        }
+	);
+}
+
+function trans(from,to)
+{
+    $(from).transliterate({direction: 'c2l', translitareteTo:true,
+        translitareteToField: to});
+    $(to).val($(to).val().split(' ').join('').toLowerCase());
 }

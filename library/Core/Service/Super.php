@@ -224,6 +224,7 @@ class Core_Service_Super
         {
 			$this->_validator->populate($model->toArray());
 		}
+        $this->setMessage(Core_Model_Messages::getMessage(1));
 		return $model;
 	}
 	

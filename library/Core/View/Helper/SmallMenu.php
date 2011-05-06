@@ -20,7 +20,7 @@ class Zend_View_Helper_SmallMenu {
 	public function smallMenu()
 	{
 		$html = '<ul  id="icons-menu"
-		    class="ui-widget ui-helper-clearfix menu-buttons menu-scroll">';
+		    class="top-menu ui-widget ui-helper-clearfix menu-buttons menu-scroll">';
 		$acl = Zend_Registry::get('acl');
 
         $front = Zend_Controller_Front::getInstance();
@@ -49,13 +49,13 @@ class Zend_View_Helper_SmallMenu {
                                 ->iconButton($link, 'ui-icon-wrench',
                                     Zend_Registry::get('translation')
                                         ->get($resourses['module_name']),
-                                    ''
+                                    '', '', '', 'float-left'
                                 );
-						$html .= $button;
+						$html .= '<div class="sub-wrapper">' . $button;
 
 						if (count($resourses['resourses']) > 0)
 						{
-							$html .= '<ul>';
+							$html .= '<ul class="float-left sub-menu no-display">';
 							foreach ($resourses['resourses'] as $controller => $action)
 							{
 								foreach ($action as $val)
@@ -70,7 +70,7 @@ class Zend_View_Helper_SmallMenu {
                                         }
 										$link = $this->view->domainLink(1)
 											. $module . '/' . $controller . '/' . $val['action'];
-										$html .= '<li><a class="' . $subItemClass . '"
+										$html .= '<li class="no-float"><a class="' . $subItemClass . '"
 										    href = "' . $link . '">'
 											. Zend_Registry::get('translation')->get($val['name']) .
 											'</a></li>';
@@ -79,6 +79,7 @@ class Zend_View_Helper_SmallMenu {
 							}
 							$html .= '</ul>';
 						}
+                        $html .= '<div class="clear"></div></div>';
 					}
 					
 				}

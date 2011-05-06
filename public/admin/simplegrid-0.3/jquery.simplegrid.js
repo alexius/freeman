@@ -39,7 +39,9 @@
             button_add_html: '<a class="btn ui-state-default ui-corner-all binded-href" ><span class="ui-icon ui-icon-circle-plus"></span>Добавить</a>'
 		},options);
 
-        var liWrapper = '<li class="icon-link ui-state-default ui-corner-all">';
+        var liWrapper = '<li class="icon-link-grid ui-state-default ui-corner-all">';
+        var ulWrapper = '<ul class="icons-buttons ui-widget">';
+        
         var saveButton = '<a id = "save_row" class = "tooltip"><span class="ui-icon ui-icon-disk"></span></a>';
         var calncelButton = '<a id = "remove_row" class = "tooltip"><span class="ui-icon ui-icon-disk ui-icon-wrench"></span></a>';
         var tableSelector = 'table.grid-table';
@@ -420,12 +422,12 @@
 					    
 				    }
 				    
-				    tbody += '<td width = "60px" class = "grid-actions"><div>';
-                    tbody += '<ul class="icons-buttons ui-widget ui-helper-clearfix">';
-				    
+				    tbody += '<td width = "60px" class = "grid-actions">';
+                    tbody += ulWrapper;
+
 				    if (options.actions_type == 'select')
                     {
-                        tbody += '<li class="icon-link ui-state-default ui-corner-all">';
+                        tbody += liWrapper;
 					    tbody += '<a class = "" rel = "'
                                 + index + '"><span class="ui-icon ui-icon-cart"></span></a> ';
                         tbody += '</li>';
@@ -434,7 +436,7 @@
                     {
 					    if (options.edit_url != '')
                         {
-                            tbody += '<li class="icon-link ui-state-default ui-corner-all">';
+                            tbody += liWrapper;
 						    tbody += '<a class="tooltip" href = "' +
                                     options.edit_url +
 							        index + '"><span class="ui-icon ui-icon-wrench"></span></a> ';
@@ -443,16 +445,16 @@
 			    
 					    if (options.delete_url != '')
                         {
-                            tbody += '<li class="icon-link ui-state-default ui-corner-all">';
+                            tbody += liWrapper;
 						    tbody += '<a rel = "' + index +
-                                    '" class = ""><span class="ui-icon ui-icon-wrench"></span></a> ';
+                                    '" class = ""><span class="ui-icon ui-icon-trash"></span></a> ';
                             tbody += '</li>';
 					    }
                         
                         if (options.customButtons.length > 0)
                         {
                             $.each(options.customButtons, function (i, item){
-                                tbody += '<li class="icon-link ui-state-default ui-corner-all">';
+                                tbody += liWrapper;
                                 tbody += '<a href = "' + item.link + index +
                                         '" "class = "binded-href btn_no_text btn ui-state-default ui-corner-all">'
                                    + item.html + '</a> ';
@@ -460,7 +462,7 @@
                             })
                         }
 					    
-					    tbody += '<div class="clear"></div></ul></div></td>';
+					    tbody += '</ul></td>';
 				    }
 				    
 				    tbody += '</tr>';
@@ -652,13 +654,32 @@
 		var navigation = function (){
 			$('.navigation')
 				.append('<div class = "pager-nav" id = "pager"></div>');
-			$('.navigation div.pager-nav')
-				.append('<a title="Предыдущая страница" class="btn_no_text btn ui-state-default ui-corner-all prev binded-href">' +
-						'<span class="ui-icon ui-icon-circle-arrow-w"></span></a>' 
-                        + '<input class = "text-input pager-info pagedisplay" type = "text">'
-						+ '<a title="Следующая страница" class="btn_no_text btn ui-state-default ui-corner-all next binded-href">' +
-						'<span class="ui-icon ui-icon-circle-arrow-e"></span><a>'
-                        + '<select name="rows" class="pagesize"><option value = "10">10 строк</option><option value = "30">30 строк</option><option value = "50">50 строк</option></select>');
+            var navi = ulWrapper;
+            navi += liWrapper
+                + '<a title="Предыдущая страница" class="prev">'
+				+ '<span class="ui-icon ui-icon-arrowthick-1-w"></span></a>';
+            navi += '</li>';
+
+            navi += liWrapper;
+            navi += '<a title="Следующая страница" class="next">' +
+						'<span class="ui-icon ui-icon-arrowthick-1-e"></span><a>';
+            navi += '</li>';
+
+            navi += liWrapper;
+            navi += '<a title="Обновить" id="renew_grid">'
+				+ '<span class="ui-icon ui-icon-refresh"></span></a>';
+            navi += '</li>';
+
+            navi += '</ul>';
+            
+            navi += '<div><input class = "text-input pager-info pagedisplay" type = "text">';
+            navi += '<select name="rows" class="pagesize">'
+                   + '<option value = "10">10 строк</option>'
+                   + '<option value = "30">30 строк</option>'
+                   + '<option value = "50">50 строк</option>'
+                   + '</select></div>';
+
+			$('.navigation div.pager-nav').append(navi);
 			$('.navigation .pager-info')
 				.val(options.page + ' / ' + options.total_rows);
 			
@@ -873,7 +894,8 @@
 						    buildTable(answer.grid_data, options.colModel);
 						    $('.navigation .pager-info')
 							    .val(options.page + ' / ' + options.total_rows);
-                            messages(1, '<span>Данные загружены!</span><br>' );  
+                            messages(1, '<span>Данные загружены!</span><br>' );
+                            addIconHover();
 						}
                         else
                         {
@@ -978,7 +1000,15 @@
                 });
             }, 5000);            
         }
-        
+
+        var addIconHover = function()
+        {
+            $('table.grid-table .icon-link-grid').unbind('hover');
+            $('.icon-link-grid').hover(
+                function() { $(this).addClass('ui-state-hover'); },
+                function() { $(this).removeClass('ui-state-hover'); }
+		    );
+        }
 		// ф-я возрата 
 		return this.each( function() 
         {                            
@@ -1001,10 +1031,13 @@
                             {
 							    options.total_rows = Math.ceil(answer.total_rows / options.rows);
 							    buildTable(answer.grid_data, options.colModel);
-							    initSorting(options.sortcol, options.sortdir);       
+							    initSorting(options.sortcol, options.sortdir);
+
                             }
 						}
+
                         navigation();
+                        addIconHover();
                         messages('information', '<span>' + answer.message + '</span><br>' );
 					}    
 				}

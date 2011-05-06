@@ -3,7 +3,7 @@ class Form_Page extends Core_Form
 {
 	public function init()
 	{
-		$this->setAttrib('class','forms');
+		$this->setAttrib('class','forms ajax-forms');
 
 	    $this->addElement ('hidden', 'id', array (
 			'filters' => array ('StringTrim','StripTags' ),
@@ -11,7 +11,18 @@ class Form_Page extends Core_Form
 				array ('StringLength', false, array (1, 10 ) )
 			)
 		));
-        
+
+        $this->addElement ('submit', 'subtop', array (
+			'filters' => array ('StringTrim','StripTags' ),
+		));
+		$this->subtop->setLabel(Zend_Registry::get('translation')->get('save'));
+		$this->subtop->setDecorators(array(
+		   array('ViewHelper'),
+		   array('Description'),
+		   array('HtmlTag', array('tag' => 'div', 'class'=>'submit-group')),
+		));
+
+
         $this->addElement ('text', 'name', array (
             'class' => 'text-input medium-input',
             'label' => Zend_Registry::get('translation')->get('name'),
@@ -66,7 +77,17 @@ class Form_Page extends Core_Form
 			'class' => 'text-input textarea-small',
 			'label' => Zend_Registry::get('translation')->get('meta_keywords'),
 			'filters' => array ('StringTrim', 'StripTags'),
-		));	
+		));
+
+        $this->addElement ('submit', 'sub', array (
+			'filters' => array ('StringTrim','StripTags' ),
+		));
+		$this->sub->setLabel(Zend_Registry::get('translation')->get('save'));
+		$this->sub->setDecorators(array(
+		   array('ViewHelper'),
+		   array('Description'),
+		   array('HtmlTag', array('tag' => 'div', 'class'=>'submit-group')),
+		));
 	}
 }
 ?>

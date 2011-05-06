@@ -15,6 +15,7 @@
 
    $this->headLink()
             ->appendStylesheet($editorPrefix . "css/elrte.min.css")
+            ->appendStylesheet($gridPrefix . "simplegrid.css")
 ?>
 
 <script type='text/javascript'>
@@ -44,11 +45,14 @@ $(document).ready(function(){
     var opts = {
             cssClass : 'el-rte',
             lang     : '<?php echo $lang ?>',
-            height   : 450,
+            height   : 250,
             toolbar  : 'complete'
            // cssfiles : ['css/elrte-inner.css']
         }
     $('.textarea').elrte(opts);
+    $('#name').keyup(function(e){
+        trans('#name', '#url');
+    });
 });
 </script>
 
@@ -69,12 +73,25 @@ $(document).ready(function(){
         </ul>
     </div>
     <div class="content-box-content">
+        <div class="error-wrapper">
+            <?php echo $this->messenger($this->service->getError(), 0); ?>
+        </div>
+
+        <div class="message-wrapper">
+            <?php echo $this->messenger($this->service->getMessage(), 1); ?>
+        </div>
+
+        
         <div class = 'grid-block tab-content default-tab' id="tab1">
             <div class = "simplegridy hastable"></div>
             <div class="clearfix"></div>
         </div>
         <div class = 'form tab-content' id="tab2">
-            <?php echo $this->service->getValidator(); ?>
+            <?php
+                $form = $this->service->getValidator();
+                $form->setAction($host . 'index/edit/');
+                echo $form;
+            ?>
         </div>
     </div>
 </div>

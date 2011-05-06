@@ -8,6 +8,7 @@ class Core_Controller_DefaultActions extends Core_Controller_Start
      */
 	protected $_service;
 
+
 	public function indexAction()
 	{
         if ($this->getRequest()->isXmlHttpRequest())

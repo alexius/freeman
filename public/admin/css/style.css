@@ -738,3 +738,16 @@ table .odd {
 
 .float-left {float:left;}
 .buttons-left div { float:left; margin: 5px 5px 0 0;}
+
+
+.grid-table td {vertical-align: middle;}
+
+.no-float {float:none !important;}
+div.sub-wrapper {width:100px; }
+.sub-menu {position: absolute; left: 30px;
+     background: #469400 url('../images/bg-button-green.gif') top left repeat-x !important;
+     border-color: #459300 !important;
+     padding: 5px;
+    z-index: 10;
+}
+ul.sub-menu li a {color:white !important;}

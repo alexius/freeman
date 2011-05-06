@@ -21,7 +21,8 @@
 	$normalizedAcl = Core_Controller_Plugin_AclNormalizer::normalizeByRole($acl);
 
 	$user = Core_Model_User::getInstance();
-	
+	$host = $this->domainLink();
+
 	echo '<h1>' . $this->translation('current_roles') . '</h1>';
 	if (!empty($normalizedAcl))
 	{
@@ -32,7 +33,7 @@
 			{
 				echo '<li><h3>' . $this->translation('role') . ': ' . $module['role_name'];
 				echo ' <a class="show-right">' . $this->translation('show') . '</a>';
-				echo ' <a href="/admin/index/edit/id/'
+				echo ' <a href="' . $host . 'index/edit/id/'
 					. $module['role_id'] . '">' . $this->translation('redact') . '</a></h3>';
 				echo '<ul class="no-display rights-list list">';
 				foreach ($module['modules'] as $resourses)
