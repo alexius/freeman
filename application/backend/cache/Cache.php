@@ -57,3 +57,5 @@ include_once 'Zend/Form/Decorator/ViewScript.php';
 include_once 'Zend/View/Helper/Partial.php';
 include_once 'Zend/View/Helper/FormTextarea.php';
 include_once 'Zend/View/Helper/FormCheckbox.php';
+include_once 'Zend/Form/Element/Button.php';
+include_once 'Zend/View/Helper/FormButton.php';

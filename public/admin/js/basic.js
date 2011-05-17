@@ -37,6 +37,11 @@ $(document).ready(function() {
 
 
 	$( "input:submit" ).button();
+    $( "button" ).button();
+    $( '#subtopclear').click( function() {
+        var form = $(this).parent().parent();
+        $('input[type="hidden"], input[type="text"], textarea').val('');
+    });
 
 	  $('.tooltip').tooltip({
           track: true,
@@ -66,14 +71,19 @@ $(document).ready(function() {
 function ajaxForm()
 {
     $('.ajax-forms').ajaxForm(  {
+            beforeSubmit: function(){
+             for ( instance in CKEDITOR.instances )
+                CKEDITOR.instances[instance].updateElement();
+            },
             success:    function(responseText, q, y, forma) {
-                $(forma + ' .errors, .ajax-errors').html('');
+                $( 'ul.ajax-errors', forma ).remove();
+                $(forma, ' .errors').html('');
                 var ans_json = responseText;
                 if (ans_json.error == 'true') {
                     errorMessage(ans_json.error_message);
                 }
                 if (ans_json.formMessages){
-                    $(forma + ' .ajax-errors').remove();
+
                     $.each(ans_json.formMessages, function (i, item){
                         var err = '<ul class="ajax-errors '
                                 + ' errors-wrapper input-notification error png_bg">';
@@ -86,6 +96,12 @@ function ajaxForm()
                 }
                 if (ans_json.message) {
                     successMessage( ans_json.message);
+
+                    if (ans_json.formData)
+                    {
+                        $('#' + ans_json.formData.primaryKey)
+                                .val(ans_json.formData.value);
+                    }
                 }
             }
     });
@@ -135,20 +151,20 @@ function isInteger(s) {
 	}
 
 function successMessage(text){
-	$('.error-wrapper').html('');
-	$('.message-wrapper').html('');
+	//$('.error-wrapper').html('');
+	//$('.message-wrapper').html('');
     var msg = notification('success', text, 1)
-	$('.message-wrapper').html(msg);
+	$('.message-wrapper').append(msg);
     $('.message-wrapper').show();
     addCLoseEventToMsg();
 }
 
 
 function errorMessage(text){
-	$('.error-wrapper').html('');
-	$('.message-wrapper').html('');
+	//$('.error-wrapper').html('');
+	//$('.message-wrapper').html('');
     var msg = notification('error', text, 1)
-	$('.message-wrapper').html(msg);
+	$('.message-wrapper').append(msg);
     $('.message-wrapper').show();
     addCLoseEventToMsg();
 }

@@ -43,7 +43,7 @@
                             }
 
                             if (ans_json.formMessages){
-                                $(options.modalWindowId + ' .ajax-errors').remove();
+                                $(options.modalWindowId + ' ul.ajax-errors').remove();
                                 $.each(ans_json.formMessages, function (i, item)
                                 {
                                     var err = '<ul class="ajax-errors input-notification error png_bg">';

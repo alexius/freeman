@@ -394,10 +394,11 @@ ul.content-box-tabs li a.current {
 
 #main-content table td,
 #main-content table th {
-                padding: 10px;
+              
                 line-height: 1.3em;
                 }
-
+table.grid-table td, table.grid-table th
+    {padding: 10px;}
 #main-content table tfoot td .bulk-actions {
                 padding: 15px 0 5px 0;
                 }
@@ -487,7 +488,6 @@ ul.shortcut-buttons-set li {
                 font-size: 13px;
                /* width: 99.8%;*/
                 }
-
 
 .attention {
                 background: #fffbcc url('../images/icons/exclamation.png') 10px 11px no-repeat;
@@ -751,3 +751,5 @@ div.sub-wrapper {width:100px; }
     z-index: 10;
 }
 ul.sub-menu li a {color:white !important;}
+
+.grid-block {padding:8px;}

@@ -428,7 +428,7 @@
 				    if (options.actions_type == 'select')
                     {
                         tbody += liWrapper;
-					    tbody += '<a class = "" rel = "'
+					    tbody += '<a class = "tooltip" rel = "'
                                 + index + '"><span class="ui-icon ui-icon-cart"></span></a> ';
                         tbody += '</li>';
 				    }
@@ -437,7 +437,8 @@
 					    if (options.edit_url != '')
                         {
                             tbody += liWrapper;
-						    tbody += '<a class="tooltip" href = "' +
+						    tbody += '<a class="tooltip edit-link" rel = "' + index +
+                                    '" href = "' +
                                     options.edit_url +
 							        index + '"><span class="ui-icon ui-icon-wrench"></span></a> ';
                             tbody += '</li>';
@@ -447,7 +448,7 @@
                         {
                             tbody += liWrapper;
 						    tbody += '<a rel = "' + index +
-                                    '" class = ""><span class="ui-icon ui-icon-trash"></span></a> ';
+                                    '" class = "delete-link"><span class="ui-icon ui-icon-trash"></span></a> ';
                             tbody += '</li>';
 					    }
                         
@@ -493,6 +494,11 @@
             {
                 $('.delete-link').bind('click', rowDelete);          
             }
+
+            if (options.edit_url != '')
+            {
+                $('.edit-link').bind('click', rowFormEdit);
+            }
             
 			// ф-я подсетвки
 			$(tableSelector + ' tbody tr')
@@ -531,12 +537,10 @@
             
             var $href = $(this);
             var id = $href.attr('rel');
-            
+
             $("#confirm").dialog({
-                bgiframe: true,
-                autoOpen: false,
                 resizable: false,
-                height:140,
+                width: 250,
                 modal: true,
                 overlay: {
                     backgroundColor: '#000',
@@ -551,18 +555,18 @@
                         var answer = eval("("+state.responseText+")");
                         if (answer.error == 'false')
                         {
-                            messages('success', '<span>Данные удалены!</span><br>' );
-                            $href.parent().parent().remove();
+                            messages('success', answer.message );
+                            $href.parent().parent().parent().parent().remove();
                         }
                         else
                         {
-                            messages('error', '<span>Ошибка!</span>' + answer.error);
+                            messages('error', answer.error_message);
                         }
                     }
                     
                     else
                     {
-                        messages('error', '<span>Ошибка!</span>Удаление не удалось.' );
+                         messages('error', answer.error_message);
                     }                                                   
                 }
             });
@@ -703,6 +707,10 @@
 					options.page--;
 					requestData();
 				}
+			});
+
+            $("a#renew_grid").click(function(){
+				requestData();
 			});
             
             if (options.inline_add == true)
@@ -868,7 +876,37 @@
                 $(item).bind('click', cellClick);     
             }            
         }
-        
+
+        // func for loading data for row
+        var rowFormEdit = function()
+        {
+			messages('information', '<span>Загрузка. </span>Подождите пожалуйста!' );
+			$.ajax({url:options.edit_url + this.rel,type:"GET",dataType:"json",
+				data: '',
+				complete:function(JSON,st) {
+					if(st=="success") {
+                        if (JSON.responseText)
+                        {
+                            var answer = eval("("+JSON.responseText+")");
+                            if (answer.error == 'true'){
+                                messages('error', answer.error_message );
+                            } else {
+                                messages('success', answer.message );
+
+                                $.each(answer.formData, function(id, value) {
+					                $('#' + id).val(value);
+				                });
+                                $('#clicktab2').click();
+                            }
+						}
+
+                        return false;
+                    }
+				}
+			});
+            return false;
+		};
+
 		// ф-я запросов для навигации
 		var requestData = function()
         {
@@ -894,12 +932,12 @@
 						    buildTable(answer.grid_data, options.colModel);
 						    $('.navigation .pager-info')
 							    .val(options.page + ' / ' + options.total_rows);
-                            messages(1, '<span>Данные загружены!</span><br>' );
+                            messages('success', answer.message );
                             addIconHover();
 						}
                         else
                         {
-                            messages(4, '<span>Нет данных.</span>' );  
+                            messages('success', answer.message );
                         }
                     }                                                   
 				}
@@ -909,41 +947,34 @@
 		// ф-я сохранения строки
 		var saveRowData = function(save_url, row_data)
         {
-            messages('information', '<span>Сохранение</span>Подождите пожалуйста!' );
+            messages('information', '<span>Сохранение</span> Подождите пожалуйста!' );
 			$.post(save_url,    row_data, 
 				function(JSON,st) 
                 {
 					if(st=="success") 
                     {
-						if (JSON == 'ok')
+                        var answer = JSON;
+
+                        if (answer.error == 'true')
                         {
-                            messages('success', '<span>Операция выполнена успешно</span>Изменения сохранены!' );
-			     	 	} 
+                            messages('error', answer.error_message );
+                        }
                         else
                         {
-                            if ($('#no_permission').hasClass('no_permission'))
-                            {		     		   
-                                messages('error', '<span>Ошибка сохранения!</span>У вас нет прав для выполнения указаного действия');
-                            }
-                            else if (JSON)
-                            {
-                                var answer = eval("("+JSON+")");
-                                var error = '';    
-                                $.each(answer, function (i, item) 
+
+                            messages('success', answer.message);
+
+                           
+                                /*var error = '';
+                                $.each(answer, function (i, item)
                                 {
-                                    
+
                                     if (item != '')
                                     {
                                         error = i + ' - ' +  item;
                                     }
-                                })
-                                messages('error', '<span>Ошибка сохранения!</span>' + error  );
-                            }
-                            else 
-                            {
-                                messages('error', '<span>Ошибка сохранения!</span>'  );
-                            }
-		     	    	}
+                                })*/
+                        }
 					}
 				}
 			);
@@ -1001,6 +1032,8 @@
             }, 5000);            
         }
 
+
+    //  анимация подсветки иконок  при наведении
         var addIconHover = function()
         {
             $('table.grid-table .icon-link-grid').unbind('hover');
@@ -1009,6 +1042,14 @@
                 function() { $(this).removeClass('ui-state-hover'); }
 		    );
         }
+
+
+    // обновление таблици
+        var bindRefresh = function(){
+            
+        }
+
+
 		// ф-я возрата 
 		return this.each( function() 
         {                            
@@ -1038,7 +1079,7 @@
 
                         navigation();
                         addIconHover();
-                        messages('information', '<span>' + answer.message + '</span><br>' );
+                        messages('success', '<span>' + answer.message + '</span><br>' );
 					}    
 				}
 			});			

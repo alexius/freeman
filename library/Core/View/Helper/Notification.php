@@ -50,7 +50,7 @@ class Zend_View_Helper_Notification
                         '" alt="' . $this->view->translation('close') . '">
                     </a>
                     <div class="notification-message">' . $message . '</div>
-			    </div>'; 
+			    </div>';
 		return $template;
 	}
 }

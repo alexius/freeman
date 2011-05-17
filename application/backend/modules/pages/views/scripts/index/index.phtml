@@ -10,16 +10,16 @@
 
     $this->headScript()
 			->appendFile($gridPrefix . "jquery.simplegrid.js")
-			->appendFile($editorPrefix . "js/elrte.min.js")
-            ->appendFile($editorPrefix . "js/i18n/elrte." . $lang . ".js");
+            ->appendFile($baseHost . "ckeditor/ckeditor.js")
+            ->appendFile($baseHost . "ckeditor/config.js");
 
    $this->headLink()
-            ->appendStylesheet($editorPrefix . "css/elrte.min.css")
+
             ->appendStylesheet($gridPrefix . "simplegrid.css")
 ?>
 
 <script type='text/javascript'>
-$(document).ready(function(){
+$(document).ready(function() {
      $(".simplegridy").simplegrid({
         url: '<?php echo $host ?>index/index',
         save_url: "<?php echo $host ?>index/inlinesave",
@@ -27,7 +27,7 @@ $(document).ready(function(){
         delete_url: "<?php echo $host ?>index/delete/id/",
         colNames:['№',"<?php echo $this->translation('name') ?>",
                     "<?php echo $this->translation('url')?>",
-                    "<?php echo $this->translation('enabled') ?>"],
+                    "<?php echo $this->translation('enable') ?>"],
         colModel :[    
             {name: 'id', width: "38px", index: true},
             {name: 'name', celledit: true, filter: 'name', width: "100px"},
@@ -42,18 +42,14 @@ $(document).ready(function(){
         rows: 10
      });
 
-    var opts = {
-            cssClass : 'el-rte',
-            lang     : '<?php echo $lang ?>',
-            height   : 250,
-            toolbar  : 'complete'
-           // cssfiles : ['css/elrte-inner.css']
-        }
-    $('.textarea').elrte(opts);
+ 
     $('#name').keyup(function(e){
         trans('#name', '#url');
     });
+
+
 });
+
 </script>
 
 <div class="content-box"><!-- Start Content Box -->
@@ -66,7 +62,7 @@ $(document).ready(function(){
                 </a>
             </li> <!-- href must be unique and match the id of target div -->
             <li>
-                <a href="#tab2">
+                <a href="#tab2" id="clicktab2">
                     <?php echo $this->translation('add_page')?>
                 </a>
             </li>
@@ -98,4 +94,10 @@ $(document).ready(function(){
  <div class="clear"></div>
 
 
-
+<?php
+	echo $this->modalDialog(
+		$this->translation('confirm_delete_message'),
+        'confirm',
+        $this->translation('confirm_delete')
+	);
+?>

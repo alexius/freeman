@@ -19,7 +19,17 @@ class Form_Page extends Core_Form
 		$this->subtop->setDecorators(array(
 		   array('ViewHelper'),
 		   array('Description'),
-		   array('HtmlTag', array('tag' => 'div', 'class'=>'submit-group')),
+		   array('HtmlTag', array('tag' => 'div', 'class'=>'submit-group-top')),
+		));
+
+        $this->addElement ('button', 'subtopclear', array (
+			'filters' => array ('StringTrim','StripTags' ),
+		));
+		$this->subtopclear->setLabel(Zend_Registry::get('translation')->get('clear'));
+		$this->subtopclear->setDecorators(array(
+		   array('ViewHelper'),
+		   array('Description'),
+		   array('HtmlTagClear', array('tag' => 'div', 'class'=>'submit-group-top')),
 		));
 
 
@@ -53,7 +63,8 @@ class Form_Page extends Core_Form
 		));
 
         $this->addElement ('textarea', 'text', array (
-			'class' => 'textarea',
+			'class' => 'ckeditor',
+            'name' => 'editable',
 			'label' => Zend_Registry::get('translation')->get('text'),
 			'filters' => array ('StringTrim'),
 		));

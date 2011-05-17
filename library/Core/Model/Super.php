@@ -122,6 +122,18 @@ class Core_Model_Super
     	}
     }
 
+   /**
+     *
+     * Returns array json represantation of object dada
+     * @return array
+     */
+    public function toJsonArray()
+    {
+    	if (!empty($this->_data)){
+    		return $this->_data;
+    	}
+    }
+
     /**
      * 
      * returns keys of objectr

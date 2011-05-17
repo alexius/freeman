@@ -42,7 +42,7 @@ class Form_Translation extends Core_Form
 				'validators' => array (
 					array ('regex', true,
 						array(
-							'pattern'=> '/^[0-9a-z\x80-\xFF³²\s\.\,"\'\-\(\)\$\<\>\/%]+$/i',
+							'pattern'=> '/^[\?0-9a-z\x80-\xFF³²\s\.\,"\'\-\(\)\$\<\>\/%]+$/i',
 							'messages'=>array(
 								'regexNotMatch'=>Zend_Registry::get('translation')->get('allow_letters_numbers_symbols') .
 												 ' \'"-,.'

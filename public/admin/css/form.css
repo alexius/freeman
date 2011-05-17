@@ -71,3 +71,5 @@ input[type="radio"] {
                 }
 
 form .textarea-small { height: 100px;}
+
+.submit-group-top {float:left;}

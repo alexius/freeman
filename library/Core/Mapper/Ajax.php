@@ -9,6 +9,62 @@
  
 class Core_Mapper_Ajax extends Core_Mapper_Super
 {
+
+   public function insertSlug($model, $module)
+   {
+    	$db = $this->getDbTable()->getAdapter();
+        try
+        {
+           $db->insert('slugs', array('item_url' => $model->url,
+            'item_id' => $model->id, 'item_module' => $module));          
+        }
+        catch(Zend_Exception $e)
+        {
+            $model->setError(Core_Model_Errors::getError('url_exists'));
+        }
+        return $model;
+    }
+
+    public function updateSlug($model, $module)
+    {
+    	$db = $this->getDbTable()->getAdapter();
+        try
+        {
+            $db->update('slugs', array('item_url' => $model->url),
+            'item_id = "' . $model->id . '" AND item_module = "' . $module . '"');
+        }
+        catch(Zend_Exception $e)
+        {
+            $model->setError(Errors::getError('url_exists'));
+        }
+        return $model;
+
+
+    }
+
+    public function fetchSlug($id, $module)
+    {
+    	$db = $this->getDbTable()->getAdapter();
+    	$select = $db->select()->from('slugs')
+    		->where('item_id = "' . $id . '" AND item_module  = "' . $module . '"');
+    	return $db->fetchRow($select);
+    }
+
+    public function fetchSlugByUrl($url, $id = null)
+    {
+    	$db = $this->getDbTable()->getAdapter();
+    	$select = $db->select()->from('slugs')
+    		->where('item_url = "' . $url . '"');
+        if ($id != null){
+            $primary = $this->_dbTable->getPrimary();
+            if (is_array($primary)){
+		        $primary = $primary[1];
+            }
+            $select->where($primary . ' = ?', $id , 'INTEGER');
+        }
+    	return $db->fetchRow($select);
+    }
+
     public function fetchForGrid(array $fields, array $data)
 	{
 		$primary = $this->_dbTable->getPrimary();
@@ -97,6 +153,74 @@ class Core_Mapper_Ajax extends Core_Mapper_Super
         }
 
 		return $result;
+	}
+
+    public function partialSave(array $data)
+    {
+    	$table = $this->getDbTable();
+    	$data = $table->cleanArray($data);
+        $pk = $table->getPrimary();
+        $pk = $pk[1];
+
+        $row = $table->fetchRow($pk . ' =  "' . $data[$pk] . '"');
+        if ($row)
+        {
+            foreach ($data as $key => $value)
+            {
+                $row->$key = $value;
+            }
+            $row->save();
+            return true;
+        }
+        else
+        {
+            try
+            {
+                if ($data[$pk] == null) unset($data[$pk]);
+                $table->insert($data);
+                $ids = $table->getAdapter()->lastInsertId();
+                $object->$pk = $ids;
+
+            }
+            catch(Zend_Exception $e)
+            {
+                $object->setError("Îøèáêà: " . $e->getMessage() . "\n");
+            }
+            return $object;
+        }
+    }
+    public function fetchId($id)
+    {
+    	$pk = $this->getDbTable()->getPrimary();
+        if (is_array($pk))
+        {
+        	$pk = $pk[1];
+        }
+
+        $result = $this->getDbTable()
+        	->fetchRow($pk . ' = "' . $id . '"');
+       	if (!empty($result))
+       	{
+	        $entry = new $this->_rowClass;
+	        $entry->populate($result);
+	        return $entry;
+       	}
+       	else
+       	{
+       		return false;
+       	}
+    }
+
+    public function delete($id, $module = null)
+	{
+        $this->getDbTable()->deleteAllByKey('id', $id);
+
+        if ($module != null){
+            $this->getAdapter()->delete('slugs',
+                'item_id = "' . $id . '" AND item_module = "' . $module . '"'
+            );
+        }
+
 	}
 
     protected  function addCustomFilters($data, Zend_Db_Select $select)

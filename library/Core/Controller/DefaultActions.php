@@ -8,13 +8,12 @@ class Core_Controller_DefaultActions extends Core_Controller_Start
      */
 	protected $_service;
 
-
 	public function indexAction()
 	{
         if ($this->getRequest()->isXmlHttpRequest())
         {
             $filters = $this->_request->getPost();
-            $data = $this->_service->getGridData($filters);
+            $this->_service->getGridData($filters);
         }
 	}
     
@@ -30,8 +29,12 @@ class Core_Controller_DefaultActions extends Core_Controller_Start
                 $this->view->message = $o;
             }            
         }
-        $this->view->id = $this->_request->getParam('id');
-        $this->view->service = $this->_service;
+
+        if ($this->_request->isGet())
+        {
+            $id = (int) $this->_request->getParam('id');
+            $this->_service->getRow($id);
+        }
     }
 	
 	public function inlinesaveAction()
@@ -43,17 +46,13 @@ class Core_Controller_DefaultActions extends Core_Controller_Start
 			
 			$post = $this->_request->getPost();
 			$ans = $this->_service->partialSave($post);
-			$this->ajaxResponse($ans, 'text/html');	
-		}
-		else
-		{
-			$this->_redirect('index');
 		}
 	}
 	
 	public function ajaxsubmitAction()
 	{	
-		if ($this->getRequest()->isXmlHttpRequest() || $this->getRequest()->isPost())
+		if ($this->getRequest()->isXmlHttpRequest() ||
+            $this->getRequest()->isPost())
 		{
 			$this->_helper->viewRenderer->setNoRender();
 			$this->_helper->layout->disableLayout();			
@@ -105,9 +104,13 @@ class Core_Controller_DefaultActions extends Core_Controller_Start
     {
         $this->_helper->viewRenderer->setNoRender();
         $this->_helper->layout->disableLayout();
-        $id = $this->_request->getParam('id');    
-        $this->_service->getMapper()->delete($id);
-        $response['error'] = 'false'; 
-        $this->ajaxResponse(Zend_Json::encode($response), 'text/html');                                                                          
+        $id = (int) $this->_request->getParam('id');
+        $this->_service->delete($id);
+    }
+
+    public function imagesAction()
+    {
+        $this->_helper->layout->disableLayout();
+        $this->_ajaxViewEnabled = true;
     }
 }
