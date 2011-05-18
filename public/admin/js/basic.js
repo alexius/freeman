@@ -71,7 +71,7 @@ $(document).ready(function() {
 function ajaxForm()
 {
     $('.ajax-forms').ajaxForm(  {
-            beforeSubmit: function(){
+            beforeSerialize: function(){
              for ( instance in CKEDITOR.instances )
                 CKEDITOR.instances[instance].updateElement();
             },

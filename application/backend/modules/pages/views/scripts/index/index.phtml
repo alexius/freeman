@@ -1,7 +1,6 @@
 <?php
     $baseHost =  $this->domainLink (1);
     $host =  $this->domainLink ();
-    $editorPrefix = $this->domainLink (2);
     $gridPrefix = $this->domainLink (3);
 
     $lang = Zend_Registry::get('language');
@@ -14,7 +13,6 @@
             ->appendFile($baseHost . "ckeditor/config.js");
 
    $this->headLink()
-
             ->appendStylesheet($gridPrefix . "simplegrid.css")
 ?>
 
@@ -41,13 +39,10 @@ $(document).ready(function() {
         sortcol: 'id',            
         rows: 10
      });
-
  
     $('#name').keyup(function(e){
         trans('#name', '#url');
     });
-
-
 });
 
 </script>

@@ -35,7 +35,7 @@ class Core_Mapper_Ajax extends Core_Mapper_Super
         }
         catch(Zend_Exception $e)
         {
-            $model->setError(Errors::getError('url_exists'));
+            $model->setError(Core_Model_Errors::getError('url_exists'));
         }
         return $model;
 
@@ -184,7 +184,7 @@ class Core_Mapper_Ajax extends Core_Mapper_Super
             }
             catch(Zend_Exception $e)
             {
-                $object->setError("Îøèáêà: " . $e->getMessage() . "\n");
+                $object->setError("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: " . $e->getMessage() . "\n");
             }
             return $object;
         }

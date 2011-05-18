@@ -153,8 +153,8 @@ class Core_Service_Ajax extends Core_Service_Super
 		}
         else
         {
-            $this->setMessage(Core_Model_Messages::getMessage('no_data'));
-			$this->setJsonData (array ('error' => Errors::getError(111)));
+            $this->setError(Core_Model_Errors::getError('302'));
+			//$this->setJsonData (array ('error' => Core_Model_Errors::getError(111)));
 		}
 	}
 

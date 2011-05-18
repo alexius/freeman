@@ -928,12 +928,20 @@
                         if (JSON.responseText)
                         {
 						    var answer = eval("("+JSON.responseText+")");
-						    options.total_rows = Math.ceil(answer.total_rows / options.rows);
-						    buildTable(answer.grid_data, options.colModel);
-						    $('.navigation .pager-info')
-							    .val(options.page + ' / ' + options.total_rows);
-                            messages('success', answer.message );
-                            addIconHover();
+
+							if (answer.error == 'false')
+							{
+								options.total_rows = Math.ceil(answer.total_rows / options.rows);
+								buildTable(answer.grid_data, options.colModel);
+								$('.navigation .pager-info')
+									.val(options.page + ' / ' + options.total_rows);
+								messages('success', answer.message );
+							}
+							else
+							{
+								messages('error', '<span>' + answer.error_message + '</span><br>' );
+							}
+							addIconHover();
 						}
                         else
                         {
@@ -1074,12 +1082,17 @@
 							    buildTable(answer.grid_data, options.colModel);
 							    initSorting(options.sortcol, options.sortdir);
 
-                            }
-						}
+								messages('success', '<span>' + answer.message + '</span><br>' );
 
+                            }
+							else
+							{
+								messages('error', '<span>' + answer.error_message + '</span><br>' );
+							}
+						}
                         navigation();
                         addIconHover();
-                        messages('success', '<span>' + answer.message + '</span><br>' );
+
 					}    
 				}
 			});			

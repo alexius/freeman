@@ -63,8 +63,7 @@ class Form_Page extends Core_Form
 		));
 
         $this->addElement ('textarea', 'text', array (
-			'class' => 'ckeditor',
-            'name' => 'editable',
+			'class' => 'ckeditor editable',
 			'label' => Zend_Registry::get('translation')->get('text'),
 			'filters' => array ('StringTrim'),
 		));
