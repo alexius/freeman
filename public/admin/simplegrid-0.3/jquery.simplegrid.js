@@ -894,7 +894,20 @@
                                 messages('success', answer.message );
 
                                 $.each(answer.formData, function(id, value) {
-					                $('#' + id).val(value);
+									var inp = $('#' + id);
+									if (inp.attr('type') == 'checkbox'){
+										if (value == '1'){
+											$(inp).attr('checked', 'checked');
+										} else if (value == '0'){
+											$(inp).removeAttr('checked');
+										}
+									}
+									else if (inp.attr('type') == 'select'){
+
+									}
+									else {
+										$('#' + id).val(value);
+									}
 				                });
                                 $('#clicktab2').click();
                             }
@@ -1105,6 +1118,7 @@
 	};
 })(jQuery);
 
+/*
 var customfilter_price = function (cur, col_name)
 {
     var select_html = 'От: <input class = "grid-filter-range" name = "from-' +
@@ -1119,4 +1133,4 @@ var customfilter_price = function (cur, col_name)
     });
     select_html += '</select>';
     return select_html;
-}
+}*/

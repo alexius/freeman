@@ -18,7 +18,7 @@ class Core_Service_Super
  	 * initialized Mapper object
  	 * @var Core_Mapper_Super
  	 */
-	protected $_mapper = null;
+	protected $_mapper;
 	
 	/**
  	 * Mapper class name

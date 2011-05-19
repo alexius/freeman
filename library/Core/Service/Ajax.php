@@ -86,7 +86,7 @@ class Core_Service_Ajax extends Core_Service_Super
         }
 
 		$model = $this->_mapper->objectSave($model);
-
+		$this->postObjectSave($model);
         if (!empty($this->_slugtype))
         {
             $this->saveSlug($model, $this->_slugtype);
@@ -192,6 +192,8 @@ class Core_Service_Ajax extends Core_Service_Super
             }
 
 			$model = $this->_mapper->objectSave($model);
+			$this->postObjectSave($model);
+			
 			if ($o = $model->getError())
             {
                 $this->setError(Core_Model_Errors::getError($o));
@@ -265,4 +267,8 @@ class Core_Service_Ajax extends Core_Service_Super
         return false;
     }
 
+	protected function postObjectSave($model)
+	{
+
+	}
 }

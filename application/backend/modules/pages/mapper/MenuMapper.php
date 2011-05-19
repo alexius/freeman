@@ -9,6 +9,12 @@ class MenuMapper extends Core_Mapper_Ajax
 	protected $_rowClass = 'Menu';
     protected $_gridFilters = array(1 => 'primary', 2 => 'name',
                                     3 => 'url');
+
+
+	public function resetDefault($id)
+	{
+		$this->getDbTable()->update(array('default' => '0'), 'id != "' . (int) $id . '"');
+	}
 }
 
 ?>

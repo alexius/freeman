@@ -1,5 +1,17 @@
 $(document).ready(function() {
 
+	var ckedior = siteLang;
+	if (siteLang == 'ua'){
+		ckedior = 'uk'
+	}
+
+	if (typeof CKEDITOR != "undefined"){
+		CKEDITOR.replace( 'text',
+			{ language: ckedior }
+		);
+	}
+
+
     $('.top-menu .sub-wrapper').hover(
             function(){ var subWrapper = $(this);
                 $('ul.sub-menu', subWrapper).css('display', 'block')},
@@ -76,8 +88,8 @@ function ajaxForm()
                 CKEDITOR.instances[instance].updateElement();
             },
             success:    function(responseText, q, y, forma) {
-                $( 'ul.ajax-errors', forma ).remove();
-                $(forma, ' .errors').html('');
+                $('ul.ajax-errors', forma).remove();
+                $('.errors', forma).html('');
                 var ans_json = responseText;
                 if (ans_json.error == 'true') {
                     errorMessage(ans_json.error_message);
@@ -245,4 +257,16 @@ function trans(from,to)
     $(from).transliterate({direction: 'c2l', translitareteTo:true,
         translitareteToField: to});
     $(to).val($(to).val().split(' ').join('').toLowerCase());
+}
+
+function getParameterByName( name )
+{
+  name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+  var regexS = "[\\?&]"+name+"=([^&#]*)";
+  var regex = new RegExp( regexS );
+  var results = regex.exec( window.location.href );
+  if( results == null )
+    return "";
+  else
+    return decodeURIComponent(results[1].replace(/\+/g, " "));
 }

@@ -1,12 +1,13 @@
-<?php echo $this->doctype ( Zend_View_Helper_Doctype::XHTML1_TRANSITIONAL );?>
-<?php $host = $this->domainLink (1);?>
+<?php
+	echo $this->doctype ( Zend_View_Helper_Doctype::XHTML1_TRANSITIONAL );
+	$host = $this->domainLink (1);
+	$lang = Zend_Registry::get('language');
+?>
 <html>
 <head>
-
 	<?php echo $this->headMeta ()->appendHttpEquiv ( 'Content-Type', 'text/html; charset=UTF-8' );?>
 	<?php echo $this->headTitle ( $this->pageTitle());?>
 	<?php
-
 		$this->headScript()
             ->prependFile($host . "js/jquery-ui-1.8.11.custom.min.js")
 			->prependFile($host . "js/jquery-1.5.2.min.js")
@@ -39,6 +40,11 @@
 			</script>
 	<![endif]-->
 
+
+	<script type="text/javascript">
+		var siteLang = "<?php echo $lang?>";
+	</script>
+	
 	<?php echo $this->headLink ();?>
 	<?php echo $this->headScript ();?>
 

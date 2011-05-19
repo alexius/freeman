@@ -172,22 +172,6 @@ class Core_Mapper_Ajax extends Core_Mapper_Super
             $row->save();
             return true;
         }
-        else
-        {
-            try
-            {
-                if ($data[$pk] == null) unset($data[$pk]);
-                $table->insert($data);
-                $ids = $table->getAdapter()->lastInsertId();
-                $object->$pk = $ids;
-
-            }
-            catch(Zend_Exception $e)
-            {
-                $object->setError("������: " . $e->getMessage() . "\n");
-            }
-            return $object;
-        }
     }
     public function fetchId($id)
     {

@@ -47,14 +47,12 @@ class Form_Menu extends Core_Form
 			'class' => 'text-input medium-input',
             'required' => true,
 			'label' => Zend_Registry::get('translation')->get('url'),
-		//	'validators' => array ('alnum'
-		//	),
 			'filters' => array ('StringTrim', 'StripTags'),
 		));
 
 		$this->addElement ('checkbox', 'active', array (
 			'class' => 'checkbox',
-            'checked' => 'checked',
+			'checked' => 'checked',
 			'label' => Zend_Registry::get('translation')->get('enable'),
 			'filters' => array ('StringTrim','StripTags' ),
 			'validators' => array ('int',
@@ -63,8 +61,7 @@ class Form_Menu extends Core_Form
 		));
 
 		$this->addElement ('checkbox', 'default', array (
-			'class' => 'checkbox',
-            'checked' => 'checked',
+			'class' => 'checkboxs',
 			'label' => Zend_Registry::get('translation')->get('menu_default'),
 			'filters' => array ('StringTrim','StripTags' ),
 			'validators' => array ('int',
