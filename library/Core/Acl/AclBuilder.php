@@ -110,7 +110,9 @@ class Core_Acl_AclBuilder extends Zend_Acl
             ->joinLeft(array('m' => 'system_modules'), 'm.id = res.module_id',
             	array('module_name', 'module_code AS default_module', 'show'))
             ->order('r.role_id ASC')
-            ->order('r.parent_role_id ASC');
+            ->order('r.parent_role_id ASC')
+			->order('m.id ASC')
+			->order('ri.right_name ASC');
 
         return $this->_db->fetchAll($select);
 	}

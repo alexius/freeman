@@ -59,6 +59,7 @@
                             if (ans_json.message) {
                                 $(options.modalWindowId + ' .success .notification-message ')
                                         .html(ans_json.message);
+								$(options.modalWindowId + ' .success').show();
 
                             }
                             return false;

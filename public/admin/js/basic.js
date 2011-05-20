@@ -6,9 +6,11 @@ $(document).ready(function() {
 	}
 
 	if (typeof CKEDITOR != "undefined"){
-		CKEDITOR.replace( 'text',
-			{ language: ckedior }
-		);
+		if ($('#text').length > 0){
+			CKEDITOR.replace( 'text',
+				{ language: ckedior }
+			);
+		}
 	}
 
 
